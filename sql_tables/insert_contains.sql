@@ -1,14 +1,14 @@
 INSERT INTO Contains
-VALUES ('VV38','Neomycin');
+VALUES ('VV381','Neomycin');
 
 INSERT INTO Contains
-VALUES ('VH72','Sodium');
+VALUES ('VH721','Sodium');
 
 INSERT INTO Contains
-VALUES ('VR82','Neomycin');
+VALUES ('VR821','Neomycin');
 
 INSERT INTO Contains
-VALUES ('VR82','Sucrose');
+VALUES ('VR821','Sucrose');
 
 INSERT INTO Contains
-VALUES ('VR82','Aluminum phosphate');
+VALUES ('VR821','Aluminum phosphate');
