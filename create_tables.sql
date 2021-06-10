@@ -9,7 +9,7 @@ START table_clinicaddress;
 START table_vaccinationappointment;
 START table_vaccinepatient;
 START table_clericalstaff;
-START table_boookinginfo;
+START table_bookinginfo;
 START table_assistsbooking;
 START table_patient;
 START table_patientaddress;
