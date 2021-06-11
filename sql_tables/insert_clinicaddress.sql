@@ -5,7 +5,7 @@ INSERT INTO ClinicAddress
 VALUES ('V5X0A1', 'Vancouver');
 
 INSERT INTO ClinicAddress
-VALUES ('V5T4V5', 'Vancouver');
+VALUES ('V5T2T7', 'Vancouver');
 
 INSERT INTO ClinicAddress
 VALUES ('V6G2L8', 'Burnaby');
