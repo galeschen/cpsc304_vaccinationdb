@@ -9,5 +9,4 @@ CREATE TABLE Clinic(
     FOREIGN KEY (PostalCode) REFERENCES ClinicAddress
         ON DELETE SET DEFAULT,
     FOREIGN KEY (ManagerID) REFERENCES Manager(ID)
-        ON DELETE NO ACTION
 );

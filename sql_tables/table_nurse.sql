@@ -1,6 +1,6 @@
 CREATE TABLE Nurse(
-    ID          CHAR(5),
-    Name        VARCHAR(30)    NOT NULL,
-    Password    VARCHAR(30)    NOT NULL,
+    ID           CHAR(5),
+    NName        VARCHAR(30)    NOT NULL,
+    NPassword    VARCHAR(30)    NOT NULL,
     PRIMARY KEY (ID)
 );

@@ -1,4 +1,4 @@
 CREATE TABLE Ingredient(
-        Name    VARCHAR(30),
-        PRIMARY KEY (Name)
+        IName    VARCHAR(30),
+        PRIMARY KEY (IName)
 );
