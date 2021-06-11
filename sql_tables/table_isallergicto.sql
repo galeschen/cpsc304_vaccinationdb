@@ -5,5 +5,5 @@ CREATE TABLE IsAllergicTo(
 	FOREIGN KEY (IngredientName) REFERENCES Ingredient(IName)
 		ON DELETE CASCADE,
 	FOREIGN KEY (PersonalHealthNumber) REFERENCES Patient(PersonalHealthNumber)
-        ON DELETE CASCADE,
+        ON DELETE CASCADE
 );
