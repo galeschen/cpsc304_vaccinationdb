@@ -7,5 +7,5 @@ CREATE TABLE VaccinePatient (
 	FOREIGN KEY (VaccineID) REFERENCES Vaccine(ID)
 		ON DELETE CASCADE,
 	FOREIGN KEY (PatientPHN) REFERENCES Patient(PersonalHealthNumber)
-		ON DELETE CASCADE,
+		ON DELETE CASCADE
 );

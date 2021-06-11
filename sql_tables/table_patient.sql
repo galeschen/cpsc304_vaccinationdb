@@ -7,4 +7,4 @@ PersonalHealthNumber 	int,
 	DateOfBirth			date			NOT NULL,
     PRIMARY KEY (PersonalHealthNumber),
 	FOREIGN KEY (PostalCode) REFERENCES PatientAddress(PostalCode)
-};
+);
