@@ -4,7 +4,7 @@ CREATE TABLE Vaccine(
     Cost            SMALLMONEY      NOT NULL,
     VAvailability   INT             NOT NULL,   
     UNIQUE (VName),
-    PRIMARY KEY (ID))
+    PRIMARY KEY (ID)
 );
 
 
