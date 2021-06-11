@@ -1,8 +1,9 @@
-DROP TABLE BoookingInfo;
+DROP TABLE AssistsBooking;
+DROP TABLE BookingInfo;
 DROP TABLE VaccinationAppointment;
+DROP TABLE VaccinePatient;
 DROP TABLE Contains;
 DROP TABLE IsAllergicTo;
-DROP TABLE VaccinePatient;
 DROP TABLE Vaccine;
 DROP TABLE Ingredient;
 DROP TABLE WorksAt;
@@ -11,11 +12,10 @@ DROP TABLE Manager;
 DROP TABLE Nurse;
 DROP TABLE ClinicAddress;
 DROP TABLE ClericalStaff;
-DROP TABLE AssistsBooking;
 DROP TABLE GuardianOf;
 DROP TABLE IsLinkedTo;
 DROP TABLE Adult;
-DROP TABLE Minor
+DROP TABLE Minor;
 DROP TABLE PatientAccount;
 DROP TABLE Patient;
 DROP TABLE PatientAddress;

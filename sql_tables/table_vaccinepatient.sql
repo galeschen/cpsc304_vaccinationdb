@@ -4,8 +4,8 @@ CREATE TABLE VaccinePatient (
 	RemainingDoses		INT		NOT NULL,
 	ImmunityExpirationDate	DATE,
 	PRIMARY KEY (VaccineID, PatientPHN),
-	FOREIGN KEY (VaccineID) REFERENCES Vaccine(ID)
+	FOREIGN KEY (VaccineID) REFERENCES Vaccine
 		ON DELETE CASCADE,
 	FOREIGN KEY (PatientPHN) REFERENCES Patient(PersonalHealthNumber)
-		ON DELETE CASCADE,
+		ON DELETE CASCADE
 );
