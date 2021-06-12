@@ -7,7 +7,7 @@ CREATE TABLE Clinic(
     ClinicName      VARCHAR(30)     NOT NULL,
     UNIQUE      (StreetAddress, ClinicName),
     PRIMARY KEY (ClinicID),
-    FOREIGN KEY (PostalCode,City) REFERENCES ClinicAddress,
+    FOREIGN KEY (PostalCode) REFERENCES ClinicAddress,
     FOREIGN KEY (ManagerID) REFERENCES Manager(ID)
         ON DELETE CASCADE
 );
