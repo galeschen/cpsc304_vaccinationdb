@@ -20,7 +20,7 @@ INSERT INTO PatientAccount
 VALUES ('MinorUsername32', 'eggboy!394',0984632);
 
 INSERT INTO PatientAccount
-VALUES ('MinorUsername34', 'password099',0572712);
+VALUES ('MinorUsername12', 'password099',0572712);
 
 INSERT INTO PatientAccount
 VALUES ('MinorUsername83', 'hellothere123',0820183);
