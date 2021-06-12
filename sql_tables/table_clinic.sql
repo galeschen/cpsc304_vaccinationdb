@@ -3,7 +3,6 @@ CREATE TABLE Clinic(
     ManagerID       CHAR(5),
     StreetAddress   VARCHAR(30)     NOT NULL,
     PostalCode      CHAR(6),
-    City            VARCHAR(30),
     ClinicName      VARCHAR(30)     NOT NULL,
     UNIQUE      (StreetAddress, ClinicName),
     PRIMARY KEY (ClinicID),
