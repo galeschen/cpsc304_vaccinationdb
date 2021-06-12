@@ -8,3 +8,8 @@ WHERE Field_02 >= 0
 
 Update file name.
 */
+
+/* Function selects information on all vaccines for which the illness it protects against includes user-specificed phrase. */
+SELECT *
+FROM Vaccine
+WHERE For LIKE :Includes;
