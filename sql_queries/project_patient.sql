@@ -4,7 +4,6 @@ Create one query of this category . Interface allows the user to specify the pro
 Example:
 SELECT Field_01
 FROM Table_01
-
-Update file name.
-
 */
+SELECT :Field
+FROM Patient;
