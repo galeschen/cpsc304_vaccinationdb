@@ -5,5 +5,7 @@ Example:
 SELECT Field_01
 FROM Table_01
 */
+
+/* Select user-specified field from patient. */
 SELECT :Field
 FROM Patient;
