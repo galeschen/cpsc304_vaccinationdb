@@ -13,9 +13,9 @@ $show_debug_alert_messages = False; // set to True if you want alerts to show yo
 // DB connection
 function connectToDB() {
     global $db_conn;
-    $ora_user = "ora_wangkj20";
-    $password = "a15679400";
-    $dbhost = "dbhost.students.cs.ubc.ca:1522/stu";
+    $ora_user = "";
+    $password = "";
+    $dbhost = "";
     $db_conn = OCILogon($ora_user, $password, $dbhost);
 
     if ($db_conn) {
