@@ -1,12 +1,9 @@
 <html>
     <head>
+        <link rel="stylesheet" href = "./css/Login.css">
         <title>CPSC 304 PHP/Patient Sign Up Success</title>
     </head>
 
-    <style>
-    h2 {text-align: center;}
-    form {text-align: center;}
-    </style>
     <body>
     <br />
     <br />

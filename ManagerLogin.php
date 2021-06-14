@@ -1,5 +1,6 @@
 <html>
     <head>
+    <link rel="stylesheet" href = "./css/Login.css">
         <title>CPSC 304 PHP/Manager Login</title>
     </head>
 

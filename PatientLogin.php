@@ -1,12 +1,8 @@
 <html>
     <head>
+        <link rel="stylesheet" href = "./css/Login.css">
         <title>CPSC 304 PHP/Patient Login</title>
     </head>
-
-    <style>
-    h2 {text-align: center;}
-    form {text-align: center;}
-    </style>
     <body>
     <br />
     <br />
@@ -30,7 +26,7 @@
 
         <br />
 
-        <!-- SignUp block TODO-->
+        <!-- SignUp block -->
         <form method="POST" action="PatientSignUp.php"> <!--refresh page when submitted-->
             <input type="hidden"  id="signupRequest" name="signupRequest">
             <h3>Create Account</h3>
@@ -51,7 +47,7 @@
             if($correctpassword[0] == NULL) {
                 echo "Username cannot be found";
             } else if ($password == $correctpassword[0]) {
-                echo "correct";
+                header("Location: PatientHome.php");
             } else {
                 echo "incorrect password";
             }
