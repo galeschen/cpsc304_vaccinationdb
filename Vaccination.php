@@ -1,4 +1,4 @@
-html>
+<html>
     <head>
         <title>CPSC 304 PHP/VaccinationRegistration</title>
     </head>
