@@ -1,16 +1,14 @@
+<!DOCTYPE html>
 <html>
     <head>
-        <title>CPSC 304 PHP/Patient Sign Up</title>
+        <meta charset="utf-8">
+        <link rel = "stylesheet" href = "./css/Login.css">
+        <title>CPSC 304 PHP/Patient Register</title>
     </head>
-
-    <style>
-    h2 {text-align: center;}
-    form {text-align: center;}
-    </style>
     <body>
     <br />
     <br />
-        <h2>Patient Sign Up</h2>
+        <h2>Register</h2>
 
         <hr />
         <br />
@@ -18,38 +16,94 @@
         <br />
         <br />
 
-        <!-- Sign up block-->
-        <form method="POST" action="PatientSignUpSuccess.php">
-            <input type="hidden" id="signUpRequest" name="signUpRequest">
-            
-            Personal Health Number: <input type="text" name="personal health number"> <br /><br />
-            New Username: <input type="text" name="username"> <br /><br />
-            New Password: <input type="text" name="password"> <br /><br />
+        <!-- SignUp block -->
+        <form method="POST" > 
+            Personal Health Number: <input type="text" name="phn"> <br /><br />
+            Name: <input type="text" name="name"> <br /><br />
+            Gender:
+        <input type="radio" name="gender"
+        <?php if (isset($gender) && $gender=="male") echo "checked";?>
+        value="male"> Male
+        <input type="radio" name="gender"
+        <?php if (isset($gender) && $gender=="female") echo "checked";?>
+        value="female"> Female <br /><br /> 
+            Address: <input type="text" name="address"> <br /><br />
+            Postal Code:  <input type="text" name="postalcode"> <br /><br />
+            Date of Birth: <input type="date" id = "birthday" name = "birthday"> <br /> <br /> 
+            <hr />
+            Username: <input type="text" name="username"> <br /><br />
+            Password: <input type="text" name="password"> <br /><br />
+            Confirm Password: <input type="text" name="cpassword"> <br /><br />
 
-            <input type="submit" value="Sign Up" name="signUp"></p>
+            <input type="submit" name="register" value = "Register">
         </form>
+        <br />
 
         <?php
         include 'oracle_connection.php';
+       
         
-        function handleSignUpRequest() {
+        function handleRegisterRequest() {
             global $db_conn;
-            $phn = $_POST['personal health number'];
+            $login = true;
+            $phn =  $_POST['phn'];
+            $name = $_POST['name'];
+            if ($_POST['gender'] == 'male'){
+                $sex = 'M';
+            }else if ($_POST['gender'] == 'female') {
+                $sex = 'F';
+            } else {
+                $login = false;
+                echo "<br><strong>Please select your gender!</strong><br />";
+            }
+            $address= $_POST['address'];
+            $postal = $_POST['postalcode'];
+            $birthday = $_POST['birthday'];
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $result = executePlainSQL("INSERT INTO PatientAccount VALUES ($username, $password, $phn)");
-            $correctinsert = OCI_Fetch_Array($result, OCI_BOTH);
-            // TODO:
-            // if PHN already exists in PatientAccount, echo "Personal Health Number already associated with an account."
-            // if username already exists in PatientAccount, echo "Username is already in use."
-            // $correctinsert = OCI_Fetch_Array($result, OCI_BOTH);
-            // if($correctinsert[0] == NULL) {
-            //     echo "Username cannot be found";
-            // } else if ($password == $correctinsert[0]) {
-            //     echo "correct";
-            // } else {
-            //     echo "incorrect password";
-            // }
+            $cpassword = $_POST['cpassword'];
+
+            $time=strtotime($birthday);
+            $year=date("Y",$time);
+
+            if (strlen($phn) != 7 || is_int($phn)) {
+                $login = false;
+                echo "<strong>Incorrect format! Personal Health Number has seven digits.</strong><br />";
+            }
+            if ($name == NULL) {
+                $login = false;
+                echo "<strong>Please enter your Name!</strong><br />";
+            }
+            if ($address == NULL) {
+                $login = false;
+                echo "<strong>Please enter your address!</strong><br />";
+            } 
+            if (strlen($postal) != 6) {
+                $login = false;
+                echo "<strong>Incorrect postal code format!</strong><br />";
+            }
+            if (date("Y")< $year || $birthday == NULL) {
+                $login = false;
+                echo "<strong>Incorrect year selection!</strong><br />";
+            }
+            if ($username == NULL) {
+                $login = false;
+                echo "<strong>Please enter your username! </strong><br />";
+            }
+            if ($password == NULL || $cpassword == NULL) {
+                $login = false;
+                echo "<strong>Please enter your password! </strong><br />";
+            }
+            if ($password != $cpassword) {
+                $login = false;
+                echo "<strong>Confirm password doesn't match! </strong><br />";
+            } 
+
+            if ($login) {
+                // executePlainSQL("INSERT INTO Patient VALUES ($phn,'$name','$sex','$address','$postal',DATE '$birthday')");
+                // executePlainSQL("INSERT INTO PatientAccount VALUES ('$username','$password',$phn)");
+                header("Location: PatientSignUpSuccess.php");
+            }
             OCICommit($db_conn);
         }
 
@@ -57,16 +111,18 @@
         // HANDLE ALL POST ROUTES
 	    function handlePostRequest() {
             if (connectToDB()) {
-                if (array_key_exists('signUpRequest', $_POST)) {
-                    handleSignUpRequest();
+                
+                handleRegisterRequest();
+
                 disconnectFromDB();
-            }
+            
             }
         }
 
-        if (isset($_POST['signUp'])) {
+        if (isset($_POST['register'])) {
             handlePostRequest();
         }
 		?>
 	</body>
 </html>
+
