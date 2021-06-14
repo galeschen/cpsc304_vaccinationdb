@@ -31,7 +31,7 @@
         <br />
 
         <!-- SignUp block TODO-->
-        <form method="POST" action="signup.php"> <!--refresh page when submitted-->
+        <form method="POST" action="PatientSignUp.php"> <!--refresh page when submitted-->
             <input type="hidden"  id="signupRequest" name="signupRequest">
             <h3>Create Account</h3>
             <input type="submit" value="register" name="register"></p>
