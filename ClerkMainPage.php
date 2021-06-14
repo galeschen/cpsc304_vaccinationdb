@@ -22,26 +22,15 @@
             <input type="submit" value="Exit" name="Exit"></p>
         </form>
         <br />
-
         <?php
         include 'oracle_connection.php';
-        
-        
-
-    
-        // HANDLE ALL POST ROUTES
-	    function handlePostRequest() {
-            if (connectToDB()) {
-                if (array_key_exists('loginRequest', $_POST)) {
-                    handleloginRequest();
-
-                disconnectFromDB();
-            }
-            }
-        }
-
-        if (isset($_POST['login'])) {
-            handlePostRequest();
+        echo "TEST: WORKING WOOOOO<br>";
+        global $db_conn;
+        $sql = "SELECT * FROM ClericalStaff;";
+        $result = $db_conn->query($sql);
+        echo "TEST: WORKING WOOOOO<br>";
+        while ($row = $result->fetch_assoc()) {
+            echo "ID: ".$row["ID"]." Password: ".$row["Password"]." Name: ".$row["CName"]."<br>";
         }
 		?>
 
