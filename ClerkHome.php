@@ -23,33 +23,50 @@
         </form>
 
         <form method="POST" action="ClerkHome.php">
-            <input type="submit" value="printData" name="printData"></p>
+            <input type="submit" value="printVaccineAppointments" name="printVaccineAppointments"></p>
         </form>
 
         <br />
         <?php
         include 'oracle_connection.php';
-        function printData() {
-            global $db_conn;
-            $result = executePlainSQL("SELECT * FROM ClericalStaff");
-            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                echo "ID: ".$row["ID"]." Password: ".$row["Password"]." Name: ".$row["CName"]."<br>";
+        function printVaccineAppointments() {
+            $result = executePlainSQL("SELECT * FROM VaccinationAppointment");
+            echo "<table>";
+            echo "<tr>
+                    <th>AppointmentID</th>
+                    <th>ClinicID</th>
+                    <th>Time</th>
+                    <th>BookerPHN</th>
+                    <th>PatientPHN</th>
+                    <th>NurseID</th>
+                    <th>VaccineID</th>
+                </tr>";
+            while ($row = OCI_Fetch_Array($result, OCI_ASSOC)) {
+                echo "<tr>
+                        <td>" . $row["APPOINTMENTID"] . "</td>
+                        <td>" . $row["CLINICID"] . "</td>
+                        <td>" . $row["TIME"] . "</td>
+                        <td>" . $row["BOOKERPHN"] . "</td>
+                        <td>" . $row["PATIENTPHN"] . "</td>
+                        <td>" . $row["NURSEID"] . "</td>
+                        <td>" . $row["VACCINEID"] . "</td>
+                    </tr>";
             }
+            echo "</table>";
             OCICommit($db_conn);
         }
 
         // HANDLE ALL POST ROUTES
 	    function handlePostRequest() {
             if (connectToDB()) {
-                if (array_key_exists('printData', $_POST)) {
-                    printData();
-
-                disconnectFromDB();
-            }
+                if (array_key_exists('printVaccineAppointments', $_POST)) {
+                    printVaccineAppointments();
+                    disconnectFromDB();
+                }
             }
         }
 
-        if (isset($_POST['printData'])) {
+        if (isset($_POST['printVaccineAppointments'])) {
             handlePostRequest();
         }
         
