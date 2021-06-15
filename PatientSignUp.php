@@ -20,12 +20,12 @@
         <form method="POST" > 
             Personal Health Number: <input type="text" name="phn"> <br /><br />
             Name: <input type="text" name="name"> <br /><br />
-            Gender:
-        <input type="radio" name="gender"
-        <?php if (isset($gender) && $gender=="male") echo "checked";?>
+            Sex:
+        <input type="radio" name="sex"
+        <?php if (isset($sex) && $sex=="male") echo "checked";?>
         value="male"> Male
-        <input type="radio" name="gender"
-        <?php if (isset($gender) && $gender=="female") echo "checked";?>
+        <input type="radio" name="sex"
+        <?php if (isset($sex) && $sex=="female") echo "checked";?>
         value="female"> Female <br /><br /> 
             Address: <input type="text" name="address"> <br /><br />
             Postal Code:  <input type="text" name="postalcode"> <br /><br />
@@ -48,13 +48,13 @@
             $login = true;
             $phn =  $_POST['phn'];
             $name = $_POST['name'];
-            if ($_POST['gender'] == 'male'){
+            if ($_POST['sex'] == 'male'){
                 $sex = 'M';
-            }else if ($_POST['gender'] == 'female') {
+            }else if ($_POST['sex'] == 'female') {
                 $sex = 'F';
             } else {
                 $login = false;
-                echo "<br><strong>Please select your gender!</strong><br />";
+                echo "<br><strong>Please select your sex!</strong><br />";
             }
             $address= $_POST['address'];
             $postal = $_POST['postalcode'];
