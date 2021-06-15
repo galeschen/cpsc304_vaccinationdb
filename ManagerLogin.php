@@ -1,20 +1,16 @@
 <html>
     <head>
-    <link rel="stylesheet" href = "./css/Login.css">
+         <link rel="stylesheet" href = "./css/Login.css">
         <title>CPSC 304 PHP/Manager Login</title>
     </head>
 
-    <style>
-    h2 {text-align: center;}
-    form {text-align: center;}
-    </style>
     <body>
     <br />
     <br />
-        <h2>Log in</h2>
-
+        <h2>Log in</h2>        
         <hr />
         <br />
+        <h3>Manager</h3>
         <br />
         <br />
         <br />
@@ -52,7 +48,8 @@
             if($correctpassword[0] == NULL) {
                 echo "Manager ID cannot be found";
             } else if ($password == $correctpassword[0]) {
-                echo "Correct";
+                header("Location: ManagerHome.php?mID=".$Manager_ID);
+                exit();
             } else {
                 echo "Incorrect password";
             }
