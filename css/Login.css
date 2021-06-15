@@ -1,7 +1,13 @@
 h2 {
     text-align: center;
-    color: rgb(9, 63, 80);
+    color: rgb(12, 71, 88);
     font-size: 64px;
     font-family: 'Times New Roman', Times, serif;
 }
+h3 {
+    text-align: center;
+    color: rgb(53, 139, 125);
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif; 
+} 
 form {text-align: center;}
