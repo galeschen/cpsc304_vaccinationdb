@@ -9,10 +9,12 @@
 
         <?php
         include 'oracle_connection.php';
-        // get manager ID from last page
-       
+        
+        $mID = NULL;       
 
         function initialization(){
+            // get manager ID from last page
+            global $mID;
             if($_GET){
                 $mID = $_GET['mID'];       
             }else{
@@ -52,23 +54,24 @@
             OCICommit($db_conn);
         }
 
-    
-        // HANDLE ALL POST ROUTES
-	    // function handlePostRequest() {
-        //     if (connectToDB()) {
-        //         if (array_key_exists('loginRequest', $_POST)) {
-        //             handleloginRequest();
-
-        //         disconnectFromDB();
-        //     }
-        //     }
-        // }
-
-        // if (isset($_POST['login'])) {
-        //     handlePostRequest();
-        // }
-
         initialization();
+        if (isset($_POST['ManagerVaccine'])) {
+            header("Location: ManageVaccine.php?mID=".$mID);
+            exit();
+        }
+        
 		?>
-	</body>
+	
+
+     <form method="POST">
+
+            <input type="submit" value="Manage Vaccine" name="ManagerVaccine"></p> 
+    </form>
+
+    <form method="POST" action="ManagerLogin.php"> 
+
+            <input type="submit" value="Sign Out" name="signout"></p>
+    </form>
+
+    </body>
 </html>
