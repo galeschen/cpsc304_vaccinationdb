@@ -143,21 +143,13 @@
             $PatientPHN = $_POST["VP_PatientPHN"];
             $RemainingDoses = $_POST["VP_RemainingDoses"];
             $ImmunityExpirationDate = $_POST["VP_ImmunityExpirationDate"];
-            /*
             executePlainSQL(
                 "UPDATE VaccinePatient 
-                SET RemainingDoses = '$RemainingDoses', ImmunityExpirationDate = '$ImmunityExpirationDate' 
+                SET RemainingDoses = '$RemainingDoses', ImmunityExpirationDate = DATE '$ImmunityExpirationDate' 
                 WHERE VaccineID = '$VaccineID' 
                 AND PatientPHN = '$PatientPHN'"
             );
-            */
-            executePlainSQL(
-                "UPDATE VaccinePatient 
-                SET RemainingDoses = '$RemainingDoses' 
-                WHERE VaccineID = '$VaccineID' 
-                AND PatientPHN = '$PatientPHN'"
-            );
-            //echo "Vaccination status changed<br>";
+            echo "Vaccination status updated<br>";
             OCICommit($db_conn);
         }
 
