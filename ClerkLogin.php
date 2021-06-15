@@ -52,7 +52,7 @@
             if($correctpassword[0] == NULL) {
                 echo "Clerk ID cannot be found";
             } else if ($password == $correctpassword[0]) {
-                header("Location: ClerkMainPage.php");
+                header("Location: ClerkHome.php");
             } else {
                 echo "Incorrect password";
             }
