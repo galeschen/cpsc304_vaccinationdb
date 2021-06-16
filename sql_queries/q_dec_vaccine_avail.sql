@@ -2,7 +2,8 @@
 Update Operation
 Interface allows the user to specify some input for the update operation.*/
 
--- Decreases vaccine availability. --
-UPDATE Vaccine
-SET VAvailability = (SELECT (VAvailability - &Decrement_Amount) from Vaccine Where ID = '&Vaccine_ID')
-WHERE ID = '&Vaccine_ID';
+-- Update a given patient's remaining doses and immunity expiration date of a given vaccine. --
+UPDATE VaccinePatient 
+SET RemainingDoses = '$RemainingDoses', ImmunityExpirationDate = DATE '$ImmunityExpirationDate' 
+WHERE VaccineID = '$VaccineID' 
+AND PatientPHN = '$PatientPHN

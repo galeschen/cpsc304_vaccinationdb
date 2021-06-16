@@ -6,4 +6,4 @@
 -- Deletes nurse with given Nurse ID. Nurse ID is user specified.
 
 DELETE FROM Nurse 
-WHERE ID = '&Nurse_ID';
+WHERE ID = '$nurseID';
