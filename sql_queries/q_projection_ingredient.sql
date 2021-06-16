@@ -6,8 +6,7 @@
 -- FROM Table_01
 
 
-/* Select user-specified field from Patient table. */
-SELECT &Field
-FROM Patient;
+/* Select the names of the ingredients that contained in a particular vaccine. */
+SELECT IngredientName FROM Contains where VaccineID = $VaccineInfo
 
 

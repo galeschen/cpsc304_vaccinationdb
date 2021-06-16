@@ -6,7 +6,6 @@ FROM Table_01
 WHERE Field_02 >= 0
 */
 
--- Returns the Vaccine name and Vaccine ID of vaccines that vaccinate against illness including user defined string --
-SELECT VName, ID, isFor
-FROM Vaccine
-WHERE isFor LIKE '%&Includes_String%';
+--select the correct patient password from patient account whose username = user's input username--
+SELECT ppassword FROM PatientAccount
+where Username = :username;
