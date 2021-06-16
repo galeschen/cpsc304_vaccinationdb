@@ -1,14 +1,14 @@
 INSERT INTO IsLinkedTo
-VALUES ('MinorUsername34', 'AdultUsername42');
+VALUES ('mxjuno', 'msbuddy');
 
 INSERT INTO IsLinkedTo
-VALUES ('MinorUsername32', 'AdultUsername52');
+VALUES ('noname', 'msbuddy');
 
 INSERT INTO IsLinkedTo
-VALUES ('MinorUsername12', 'AdultUsername84');
+VALUES ('hera359', 'daniel359');
 
 INSERT INTO IsLinkedTo
-VALUES ('MinorUsername83', 'AdultUsername23');
+VALUES ('lelivre', 'daniel359');
 
 INSERT INTO IsLinkedTo
-VALUES ('MinorUsername73', 'AdultUsername71');
+VALUES ('niletog', 'daniel359');

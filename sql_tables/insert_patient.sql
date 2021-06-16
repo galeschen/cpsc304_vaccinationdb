@@ -23,7 +23,7 @@ INSERT INTO Patient
 VALUES (0572712, 'Sebastian Booker', 'M', '3920 No.3 Rd', 'V7E8R3', DATE '2014-09-24');
 
 INSERT INTO Patient
-VALUES (0820183, 'Juno Aurinko', 'M', '9305 Lemming Rd', 'D8B7V3', DATE '2013-05-07');
+VALUES (0820183, 'Juno Steel', 'M', '9305 Lemming Rd', 'D8B7V3', DATE '2013-05-07');
 
 INSERT INTO Patient
-VALUES (0829573, 'Peter Aurinko', 'M', '9305 Lemming Rd', 'D8B7V3', DATE '2009-07-15');
+VALUES (0829573, 'Peter Nureyev', 'M', '9305 Lemming Rd', 'D8B7V3', DATE '2009-07-15');

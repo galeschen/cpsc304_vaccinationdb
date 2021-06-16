@@ -15,6 +15,7 @@
         <br />
 
         <!-- Login block -->
+
         <form method="POST" action="PatientLogin.php"> <!--refresh page when submitted-->
             <input type="hidden" id="loginRequest" name="loginRequest">
             
@@ -49,9 +50,8 @@
                 echo "Patient username cannot be found";
             // if the inserted password matches the password associated w/ the given username...
             } else if ($password == $correctpassword[0]) {
-                header("Location: PatientHome.php?pusername=".$Patient_username);
+                header("Location: PatientHome.php?pusername=".$username);
                 exit();
-            // if you can find a password associated w/ the given username but the inserted password does not match up...
             } else {
                 echo "Incorrect password";
             }
