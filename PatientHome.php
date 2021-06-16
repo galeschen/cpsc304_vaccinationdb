@@ -42,7 +42,7 @@
                 // echo "<h3>(Debug) Welcome " . $phn . "!</h3>";
 
                 // UPCOMING APPOINTMENTS
-                echo "<h4> &nbsp &nbsp &nbsp Here is your next vaccination appointment:</h4> <br /> <br />";
+                echo "<h4> &nbsp &nbsp &nbsp Here is your next vaccination appointment:</h4>";
 				$result = executePlainSQL("SELECT Vaccine.VName AS Vaccine,
                     C.ClinicName AS Clinic, 
                     C.StreetAddress AS ClinicAddress, 
@@ -54,7 +54,7 @@
                     AND A.PostalCode = C.PostalCode
                     AND V.VaccineID = Vaccine.ID");
                     // 3234842
-                    if ($appointmentInfo[0] = NULL) {
+                    if ($appointmentInfo[0] == NULL) {
                         echo "<h5>You have no upcoming appointments!</h5>";
                     }
                     while ($appointmentInfo = OCI_Fetch_Array($result, OCI_BOTH)) {
@@ -62,17 +62,10 @@
                         Clinic: $appointmentInfo[1]  <br />
                         Address: $appointmentInfo[2], $appointmentInfo[3] <br />
                         Time: $appointmentInfo[4]</h5>";
-
-                        // echo "<h5> <b> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp"
-                        // . $appointmentInfo[0] ."  </b></h5>";
-                        // echo "<h6>  " . $appointmentInfo[1] . "&nbsp &nbsp &nbsp &nbsp"
-                        // . $appointmentInfo[1] . "&nbsp &nbsp &nbsp &nbsp"
-                        // . $appointmentInfo[2] . "&nbsp &nbsp &nbsp &nbsp"
-                        // . $appointmentInfo[3] . "&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</h6> <br />";
-                        // . $appointmentInfo[] . "&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</h6> <br />";
                     }
 
 				// BUTTON TO BOOK A NEW APPOINTMENT
+
 
 				// BUTTON TO CANCEL AN APPOINTMENT.... if i have time
 
@@ -86,22 +79,6 @@
             
             OCICommit($db_conn);
         }
-
-    
-        // HANDLE ALL POST ROUTES
-	    // function handlePostRequest() {
-        //     if (connectToDB()) {
-        //         if (array_key_exists('loginRequest', $_POST)) {
-        //             handleloginRequest();
-
-        //         disconnectFromDB();
-        //     }
-        //     }
-        // }
-
-        // if (isset($_POST['login'])) {
-        //     handlePostRequest();
-        // }
 
         initialization();
 		?>
