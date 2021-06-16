@@ -101,8 +101,15 @@
 
             if ($login) {
                 executePlainSQL("INSERT INTO Patient VALUES ($phn,'$name','$sex','$address','$postal',DATE '$birthday')");
+                if (date("Y") - 19 > $year) {
+                    executePlainSQL("INSERT INTO Adult VALUES ($phn)");
+                } else {
+                    executePlainSQL("INSERT INTO Minor VALUES ($phn)");
+                }
                 executePlainSQL("INSERT INTO PatientAccount VALUES ('$username','$password',$phn)");
+                OCICommit($db_conn);
                 header("Location: PatientSignUpSuccess.php");
+                exit();
             }
             OCICommit($db_conn);
         }
