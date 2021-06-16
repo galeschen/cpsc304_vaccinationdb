@@ -54,9 +54,10 @@
                     while ($appointmentInfo = OCI_Fetch_Array($result, OCI_BOTH)) {
                         echo "<h5>Vaccine: $appointmentInfo[0]  <br />
                         Patient:  $appointmentInfo[1] <br />
-                        Clinic: $appointmentInfo[1]  <br />
-                        Address: $appointmentInfo[2], $appointmentInfo[3] <br />
-                        Time: $appointmentInfo[4]</h5>";
+                        Clinic: $appointmentInfo[2]  <br />
+                        Address: $appointmentInfo[3] <br />
+                        City: $appointmentInfo[4] <br />
+                        Date & Time: $appointmentInfo[5]</h5>";
                     }
 
                     $result = executePlainSQL(
@@ -74,22 +75,21 @@
                         AND V.VaccineID = Vaccine.ID"
                     );
 
-                    // TODO: TRYING TO MAKE IT SO THAT ALL APPOINTMENTS SHOW UP IN TABULAR FORMAT
                     echo "<table>";
                     echo "<tr>
                         <th>Vaccine</th>
-                        <th>Clinic</th>
                         <th>Patient</th>
+                        <th>Clinic</th>
                         <th>Address</th>
                         <th>City</th>
-                        <th>Time</th>
+                        <th>Date & Time</th>
                     </tr>";
                     
                     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
                         echo "<tr>
                             <td>" . $row[0] . "</td>
-                            <td>" . $row[2] . "</td>
                             <td>" . $row[1] . "</td>
+                            <td>" . $row[2] . "</td>
                             <td>" . $row[3] . "</td>
                             <td>" . $row[4] . "</td>
                             <td>" .  $row[5] . "</td>
