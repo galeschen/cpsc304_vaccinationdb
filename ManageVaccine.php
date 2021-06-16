@@ -10,7 +10,9 @@
         <?php
         include 'oracle_connection.php';
         $mID = NULL;
-       $check = 0;
+       $check1 = 0;
+       $check2 = 0;
+       
        
         function initialization(){
             // get manager ID from last page
@@ -94,19 +96,57 @@
             OCICommit($db_conn);
         }
 
+        
+        // GET VACCINE INFO
+        function showAvgInfo() {
+            global $db_conn;
+            if (connectToDB()) {
+                
+                $result = executePlainSQL("SELECT * FROM Vaccine WHERE Cost > (SELECT avg(Cost) from Vaccine)");
+                echo "<table align='center'>";
+                echo "<tr><th>Vaccine Name</th><th>ID</th><th>Is For</th><th>Cost</th><th>Availability</th><th>Ingredients</th></tr>";
+                while ($VaccineInfo = OCI_Fetch_Array($result, OCI_BOTH)) {
+                    // query the ingredients
+                    $ingreResult = executePlainSQL("SELECT IngredientName FROM Contains where VaccineID = '$VaccineInfo[0]'");
+                    // ingredient list
+                    $ingredient = "";
+                    while ($ingreInfo = OCI_Fetch_Array($ingreResult, OCI_BOTH)) {
+                         $ingredient .= $ingreInfo[0] . "<br />";
+                    }
+                    echo "<tr><td>" . $VaccineInfo[1] . "</td><td> "
+                    . $VaccineInfo[0] . "</td><td> "
+                    . $VaccineInfo[2] . "</td><td> "
+                    . $VaccineInfo[3] . "</td><td> "
+                    . $VaccineInfo[4] . "</td><td>"
+                    . $ingredient . "</td>";
+                }
+                echo "</table>";                              
+
+
+                disconnectFromDB();                
+            }         
+            OCICommit($db_conn);
+        }
+
         initialization();
         ob_start();
         
-        if (isset($_POST['check']) && $_POST['check'] == 'View') {
-            $check=1;
+        if (isset($_POST['checkradio']) && $_POST['checkradio'] == 'View') {
+            $check1=1;
             ob_end_clean();
             ob_start();
             showIngredientInfo();
-        } else if (!isset($_POST['check'])){
-            $check=0;
+        } else if (isset($_POST['checkradio']) && $_POST['checkradio'] == 'Default' || !isset($_POST['checkradio'])){
+            $check1=0;
+            $check2=0;
             ob_end_clean();
             ob_start();
             showVaccineInfo();
+        }  else if (isset($_POST['checkradio']) && $_POST['checkradio'] == 'Avg'){
+            $check2=1;
+            ob_end_clean();
+            ob_start();
+            showAvgInfo();
         }        
         
         if (isset($_POST['back'])) {
@@ -117,9 +157,10 @@
         <br />
     
         <form method="POST" id='check'> 
-
-        <input type="checkbox" value="View" name="check" onchange="this.form.submit()" <?php echo ($check==1 ? 'checked' : '');?>>
-        <label id= 'labelcheck'for="check"> View ingredients which are in all vaccines</label><br>
+        <input type="radio" name="checkradio" value="Default" onchange="this.form.submit()" <?php echo ($check1==0 && $check2==0 ? 'checked' : '');?>> View all vaccines<br>    
+        <input type="radio" name="checkradio" value="View" onchange="this.form.submit()" <?php echo ($check1==1 ? 'checked' : '');?>> View ingredients which are in all vaccines<br>
+        <input type="radio" name="checkradio" value="Avg" onchange="this.form.submit()" <?php echo ($check2==1 ? 'checked' : '');?>> View vaccines whose costs are high than the average<br>
+    
         </form>
 
         <br />
