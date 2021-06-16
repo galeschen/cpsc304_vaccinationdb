@@ -29,20 +29,21 @@
                 echo "<h3>Welcome " . $name . "!</h3>";
 
                 // UPCOMING APPOINTMENTS
-                // TODO idk why this is broken fdhskhfsk. this is the first thing i need to fix
                 echo "<h4> &nbsp &nbsp &nbsp Here are your upcoming appointments:</h4>";
-				$result = executePlainSQL("SELECT Vaccine.VName AS Vaccine,
-                    P.PName AS For,
+				$result = executePlainSQL(
+                    "SELECT Vaccine.VName AS Vaccine,
+                    P.PName AS Patient,
                     C.ClinicName AS Clinic, 
                     C.StreetAddress AS ClinicAddress, 
                     A.City AS ClinicCity,
                     V.Time AS AppointmentTime
-					FROM VaccinationAppointment V, Clinic C, ClinicAddress A, Patient P, Vaccine
-					WHERE V.NurseID = '$nID'
+                    FROM VaccinationAppointment V, Clinic C, ClinicAddress A, Patient P, Vaccine
+                    WHERE V.NurseID = '$nID'
                     AND P.PersonalHealthNumber = V.PatientPHN
                     AND C.ClinicID = V.ClinicID
                     AND A.PostalCode = C.PostalCode
-                    AND V.VaccineID = Vaccine.ID");
+                    AND V.VaccineID = Vaccine.ID"
+                );
                     // 3234842
 
                     // TODO: TRYING TO MAKE IT SO THAT THE "NO APPOINTMENTS" MESSAGE ONLY SHOWS UP IF THE NURSE HAS NO APPOINTMENTS
@@ -58,17 +59,43 @@
                         Time: $appointmentInfo[4]</h5>";
                     }
 
+                    $result = executePlainSQL(
+                        "SELECT Vaccine.VName AS Vaccine,
+                        P.PName AS Patient,
+                        C.ClinicName AS Clinic, 
+                        C.StreetAddress AS ClinicAddress, 
+                        A.City AS ClinicCity,
+                        V.Time AS AppointmentTime
+                        FROM VaccinationAppointment V, Clinic C, ClinicAddress A, Patient P, Vaccine
+                        WHERE V.NurseID = '$nID'
+                        AND P.PersonalHealthNumber = V.PatientPHN
+                        AND C.ClinicID = V.ClinicID
+                        AND A.PostalCode = C.PostalCode
+                        AND V.VaccineID = Vaccine.ID"
+                    );
+
                     // TODO: TRYING TO MAKE IT SO THAT ALL APPOINTMENTS SHOW UP IN TABULAR FORMAT
                     echo "<table>";
-                    echo "<tr><th>Vaccine</th><th>Clinic</th><th>Address</th><th>City</th><th>Time</th></tr>";
+                    echo "<tr>
+                        <th>Vaccine</th>
+                        <th>Clinic</th>
+                        <th>Patient</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>Time</th>
+                    </tr>";
+                    
                     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                        echo "<tr><td>" . $row["Vaccine"] . "</td><td>" . $row["Clinic"] . "</td><td>" . 
-                        $row["Patient"] . "</td><td>" . 
-                        $row["ClinicAddress"] . "</td><td>" . 
-                        $row["ClinicCity"] . "</td><td>" .  
-                        $row["AppointmentTime"] . "</td></tr>"; //or just use "echo $row[0]"
-                    echo "</table>";
+                        echo "<tr>
+                            <td>" . $row[0] . "</td>
+                            <td>" . $row[2] . "</td>
+                            <td>" . $row[1] . "</td>
+                            <td>" . $row[3] . "</td>
+                            <td>" . $row[4] . "</td>
+                            <td>" .  $row[5] . "</td>
+                        </tr>"; //or just use "echo $row[0]"
                     }
+                    echo "</table>";
                 disconnectFromDB();                
             }            
         }
