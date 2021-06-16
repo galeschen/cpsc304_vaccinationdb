@@ -36,11 +36,24 @@
                 while ($clinicInfo = OCI_Fetch_Array($result, OCI_BOTH)) {
                     echo "<h5> <b> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp"
                     . $clinicInfo[3] ."  </b></h5>";
-                    echo "<h6>  " . $clinicInfo[0] . "&nbsp &nbsp &nbsp &nbsp"
-                    . $clinicInfo[1] . "&nbsp &nbsp &nbsp &nbsp"
-                    . $clinicInfo[4] . "&nbsp &nbsp &nbsp &nbsp"
-                    . $clinicInfo[2] . "&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</h6> <br />";
-                }
+
+
+                    echo "<table align='center'>";
+                    echo "<tr><th>Clinic ID</th><th>Address</th><th>City</th><th>Postal Code</th><th>Nurse</th></tr>";
+                  
+                    $nurseResult = executePlainSQL("SELECT NName FROM Nurse ,WorksAt
+                    where Nurse.ID = WorksAt.NurseID AND '$clinicInfo[0]' = WorksAt.ClinicID");
+                    while ($nurseInfo = OCI_Fetch_Array($nurseResult, OCI_BOTH)) {
+                         $nurses .= $nurseInfo[0] . "<br />";
+                    }
+                    echo "<tr><td>" . $clinicInfo[0] . "</td><td> "
+                    . $clinicInfo[1] . "</td><td> "
+                    . $clinicInfo[4] . "</td><td> "
+                    . $clinicInfo[2] . "</td><td> "
+                    . $nurses . "</td>";                
+                    echo "</table>";  
+
+                    }
 
 
                 disconnectFromDB();                
@@ -58,19 +71,24 @@
         if (isset($_POST['ManagerVaccine'])) {
             header("Location: ManageVaccine.php?mID=".$mID);
             exit();
+        } else if (isset($_POST['ManagerNurse'])) {
+            header("Location: ManageNurse.php?mID=".$mID);
+            exit();
         }
         
 		?>
-	
+	<br />
 
      <form method="POST" class='center'>
 
-            <input type="submit" value="Manage Vaccine" name="ManagerVaccine"></p> 
+            <input type="submit" value="Manage Vaccine" name="ManagerVaccine"></p>
+            <input type="submit" value="Manage Nurse" name="ManagerNurse"></p> 
     </form>
-
+    
+    <!-- Sign out -->
     <form method="POST" action="ManagerLogin.php" class='center'> 
 
-            <input type="submit" value="Sign Out" name="signout"></p>
+    <input type="submit" value="Sign out" name="signout"></p>
     </form>
 
     </body>

@@ -59,7 +59,7 @@ input[type='checkbox'] {
 }
 
 input[type='submit'] {
-    background-color: #fdeccc;
+    background-color: #d1f1bc;
     color: rgb(6, 29, 58);
     padding: 15px 32px;
    
@@ -67,7 +67,17 @@ input[type='submit'] {
     font-size: 16px;
 
     border: none;
-    padding: 16px 32px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+  #dismiss {
+    background-color: #ffffff;
+    color: rgb(6, 29, 58);
+    padding: 10px 22px;
+   
+    text-decoration: none;
+    font-size: 14px;
     margin: 4px 2px;
     cursor: pointer;
   }
