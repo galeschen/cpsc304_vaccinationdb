@@ -1,20 +1,16 @@
 <html>
     <head>
-    <link rel="stylesheet" href = "./css/Login.css">
+         <link rel="stylesheet" href = "./css/Login.css">
         <title>CPSC 304 PHP/Nurse Login</title>
     </head>
 
-    <style>
-    h2 {text-align: center;}
-    form {text-align: center;}
-    </style>
     <body>
     <br />
     <br />
-        <h2>Log in</h2>
-
+        <h2>Log in</h2>        
         <hr />
         <br />
+        <h3>Nurse</h3>
         <br />
         <br />
         <br />
@@ -31,14 +27,6 @@
 
         <br />
 
-<!--    SignUp block TODO
-        <form method="POST" action="signup.php"> refresh page when submitted
-            <input type="hidden"  id="signupRequest" name="signupRequest">
-            <h3>Create Account</h3>
-            <input type="submit" value="register" name="register"></p>
-        </form>
-        <br /> -->
-
         <?php
         include 'oracle_connection.php';
         
@@ -46,13 +34,14 @@
             global $db_conn;
             $Nurse_ID =  $_POST['Nurse_ID'];
             $password = $_POST['password'];
-            $result = executePlainSQL("SELECT nPassword FROM Nurse
+            $result = executePlainSQL("SELECT NPassword FROM Nurse
                                                 where ID = '$Nurse_ID'");
             $correctpassword = OCI_Fetch_Array($result, OCI_BOTH);
             if($correctpassword[0] == NULL) {
                 echo "Nurse ID cannot be found";
             } else if ($password == $correctpassword[0]) {
-                echo "Correct";
+                header("Location: NurseHome.php?nID=".$Nurse_ID);
+                exit();
             } else {
                 echo "Incorrect password";
             }
@@ -77,4 +66,3 @@
 		?>
 	</body>
 </html>
-

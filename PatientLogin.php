@@ -24,7 +24,6 @@
 
             <input type="submit" value="login" name="login"></p>
         </form>
-
         <br />
 
         <!-- SignUp block -->

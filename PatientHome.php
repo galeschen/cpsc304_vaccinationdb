@@ -42,7 +42,8 @@
                 // echo "<h3>(Debug) Welcome " . $phn . "!</h3>";
 
                 // UPCOMING APPOINTMENTS
-                echo "<h4> &nbsp &nbsp &nbsp Here is your next vaccination appointment:</h4>";
+                // this is working.
+                echo "<h4> &nbsp &nbsp &nbsp This is your next vaccination appointment:</h4>";
 				$result = executePlainSQL("SELECT Vaccine.VName AS Vaccine,
                     C.ClinicName AS Clinic, 
                     C.StreetAddress AS ClinicAddress, 
@@ -53,15 +54,29 @@
                     AND C.ClinicID = V.ClinicID
                     AND A.PostalCode = C.PostalCode
                     AND V.VaccineID = Vaccine.ID");
-                    // 3234842
-                    if ($appointmentInfo[0] == NULL) {
+                    
+                    // TODO: TRYING TO MAKE IT SO THAT THE "NO APPOINTMENTS" MESSAGE ONLY SHOWS UP IF THE PATIENT HAS NO APPOINTMENTS
+                    if ($result[0] == NULL) {
                         echo "<h5>You have no upcoming appointments!</h5>";
                     }
+                    // this is working
                     while ($appointmentInfo = OCI_Fetch_Array($result, OCI_BOTH)) {
                         echo "<h5>Vaccine: $appointmentInfo[0]  <br />
                         Clinic: $appointmentInfo[1]  <br />
                         Address: $appointmentInfo[2], $appointmentInfo[3] <br />
                         Time: $appointmentInfo[4]</h5>";
+                    }
+
+                    // TODO: TRYING TO MAKE IT SO THAT ALL APPOINTMENTS SHOW UP IN TABULAR FORMA. this is not working.
+                    // echo "<table>";
+                    // echo "<tr><th>Vaccine</th><th>Clinic</th><th>Address</th><th>City</th><th>Time</th></tr>";
+                    // while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                    //     echo "<tr><td>" . $row["Vaccine"] . "</td><td>" . $row["Clinic"] . "</td><td>" . 
+                    //     $row["ClinicAddress"] . "</td><td>" . 
+                    //     $row["ClinicCity"] . "</td><td>" .  
+                    //     $row["AppointmentTime"] . "</td></tr>"; //or just use "echo $row[0]"
+                        
+                    // echo "</table>";
                     }
 
 				// BUTTON TO BOOK A NEW APPOINTMENT
