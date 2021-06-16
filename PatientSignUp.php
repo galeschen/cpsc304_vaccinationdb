@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
         <link rel = "stylesheet" href = "./css/Login.css">
         <title>CPSC 304 PHP/Patient Register</title>
     </head>
@@ -34,101 +35,92 @@
             Password: <input type="text" name="password"> <br /><br />
             Confirm Password: <input type="text" name="cpassword"> <br /><br />
 
-            <input type="submit" name="registerComplete" value = "Register">
+            <input type="submit" name="register" value = "Register">
         </form>
         <br />
 
         <?php
         include 'oracle_connection.php';
+       
         
         function handleRegisterRequest() {
             global $db_conn;
-            
-                $login = true;
-                $phn =  $_POST['phn'];
-                $name = $_POST['name'];
-                if ($_POST['sex'] == 'male'){
-                    $sex = 'M';
-                }else if ($_POST['sex'] == 'female') {
-                    $sex = 'F';
-                } else {
-                    $login = false;
-                    echo "<br><strong>Please select your sex!</strong><br />";
-                }
-                $address= $_POST['address'];
-                $postal = $_POST['postalcode'];
-                $birthday = $_POST['birthday'];
-                $username = $_POST['username'];
-                $password = $_POST['password'];
-                $cpassword = $_POST['cpassword'];
-
-                $time=strtotime($birthday);
-                $year=date("Y",$time);
-
-                if (strlen($phn) != 7 || is_int($phn)) {
-                    $login = false;
-                    echo "<strong>Incorrect format! Personal Health Number has seven digits.</strong><br />";
-                }
-                if ($name == NULL) {
-                    $login = false;
-                    echo "<strong>Please enter your Name!</strong><br />";
-                }
-                if ($address == NULL) {
-                    $login = false;
-                    echo "<strong>Please enter your address!</strong><br />";
-                } 
-                if (strlen($postal) != 6) {
-                    $login = false;
-                    echo "<strong>Incorrect postal code format!</strong><br />";
-                }
-                if (date("Y")< $year || $birthday == NULL) {
-                    $login = false;
-                    echo "<strong>Incorrect year selection!</strong><br />";
-                }
-                if ($username == NULL) {
-                    $login = false;
-                    echo "<strong>Please enter your username! </strong><br />";
-                }
-                if ($password == NULL || $cpassword == NULL) {
-                    $login = false;
-                    echo "<strong>Please enter your password! </strong><br />";
-                }
-                if ($password != $cpassword) {
-                    $login = false;
-                    echo "<strong>Confirm password doesn't match! </strong><br />";
-                } 
-
-               
-                if ($login) {
-                    executePlainSQL("INSERT INTO Patient VALUES ($phn,'$name','$sex','$address','$postal',DATE '$birthday')");
-                    if (date("Y") - 19 > $year) {
-                        executePlainSQL("INSERT INTO Adult VALUES ($phn)");
-                    } else {
-                        executePlainSQL("INSERT INTO Minor VALUES ($phn)");
-                    }
-                    executePlainSQL("INSERT INTO PatientAccount VALUES ('$username','$password',$phn)");
-                    OCICommit($db_conn);
-                }
-                disconnectFromDB();  
-
-            if($login) {
-                header("Location: PatientSignUpSuccess.php");
-                exit();
+            $login = true;
+            $phn =  $_POST['phn'];
+            $name = $_POST['name'];
+            if ($_POST['sex'] == 'male'){
+                $sex = 'M';
+            }else if ($_POST['sex'] == 'female') {
+                $sex = 'F';
             } else {
-                header("Location: PatientSignUp.php");
-                exit();
+                $login = false;
+                echo "<br><strong>Please select your sex!</strong><br />";
             }
+            $address= $_POST['address'];
+            $postal = $_POST['postalcode'];
+            $birthday = $_POST['birthday'];
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            $cpassword = $_POST['cpassword'];
+
+            $time=strtotime($birthday);
+            $year=date("Y",$time);
+
+            if (strlen($phn) != 7 || is_int($phn)) {
+                $login = false;
+                echo "<strong>Incorrect format! Personal Health Number has seven digits.</strong><br />";
+            }
+            if ($name == NULL) {
+                $login = false;
+                echo "<strong>Please enter your Name!</strong><br />";
+            }
+            if ($address == NULL) {
+                $login = false;
+                echo "<strong>Please enter your address!</strong><br />";
+            } 
+            if (strlen($postal) != 6) {
+                $login = false;
+                echo "<strong>Incorrect postal code format!</strong><br />";
+            }
+            if (date("Y")< $year || $birthday == NULL) {
+                $login = false;
+                echo "<strong>Incorrect year selection!</strong><br />";
+            }
+            if ($username == NULL) {
+                $login = false;
+                echo "<strong>Please enter your username! </strong><br />";
+            }
+            if ($password == NULL || $cpassword == NULL) {
+                $login = false;
+                echo "<strong>Please enter your password! </strong><br />";
+            }
+            if ($password != $cpassword) {
+                $login = false;
+                echo "<strong>Confirm password doesn't match! </strong><br />";
+            } 
+
+            if ($login) {
+                // executePlainSQL("INSERT INTO Patient VALUES ($phn,'$name','$sex','$address','$postal',DATE '$birthday')");
+                // executePlainSQL("INSERT INTO PatientAccount VALUES ('$username','$password',$phn)");
+                header("Location: PatientSignUpSuccess.php");
+            }
+            OCICommit($db_conn);
         }
 
     
-
-        if (isset($_POST['registerComplete'])) {
-            global $db_conn;
+        // HANDLE ALL POST ROUTES
+	    function handlePostRequest() {
             if (connectToDB()) {
                 
                 handleRegisterRequest();
-            }
+
+                disconnectFromDB();
             
+            }
+        }
+
+        if (isset($_POST['register'])) {
+            handlePostRequest();
         }
 		?>
 	</body>

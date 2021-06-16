@@ -1,6 +1,6 @@
 <html>
     <head>
-    <link rel="stylesheet" href = "./css/Nurse.css">
+    <link rel="stylesheet" href = "./css/Patient.css">
         <title>CPSC 304 PHP/Nurse Home</title>
     </head>
     <body>
@@ -18,6 +18,7 @@
               echo "Url has no user";
             }
             if (connectToDB()) {
+				// echo "debug - you made it.";
 
 				// GET NURSE NAME
 				$result = executePlainSQL("SELECT NName FROM Nurse WHERE ID = '$nID'");
@@ -28,42 +29,60 @@
                 echo "<h3>Welcome " . $name . "!</h3>";
 
                 // UPCOMING APPOINTMENTS
-               echo "<h4>  Here are your upcoming appointments:</h4>";
-				$result = executePlainSQL("SELECT Vaccine.VName AS Vaccine,
+                echo "<h4> &nbsp &nbsp &nbsp Here are your upcoming appointments:</h4>";
+				$result = executePlainSQL(
+                    "SELECT Vaccine.VName AS Vaccine,
                     P.PName AS Patient,
                     C.ClinicName AS Clinic, 
                     C.StreetAddress AS ClinicAddress, 
                     A.City AS ClinicCity,
                     V.Time AS AppointmentTime
-					FROM VaccinationAppointment V, Clinic C, ClinicAddress A, Patient P, Vaccine
-					WHERE V.NurseID = '$nID'
+                    FROM VaccinationAppointment V, Clinic C, ClinicAddress A, Patient P, Vaccine
+                    WHERE V.NurseID = '$nID'
                     AND P.PersonalHealthNumber = V.PatientPHN
                     AND C.ClinicID = V.ClinicID
                     AND A.PostalCode = C.PostalCode
-                    AND V.VaccineID = Vaccine.ID 
-                    ORDER BY V.Time asc");
+                    AND V.VaccineID = Vaccine.ID"
+                );
+                    // 3234842
 
-                    // find whether has appointment or not
-                    $appointmentInfo = OCI_Fetch_Array($result, OCI_BOTH);
-                    if ($appointmentInfo[0] == NULL) {
+                    /*
+                    if ($result[0] == NULL) {
                         echo "<h5>You have no upcoming appointments!</h5>";
                     }
-                    
-                    $result = executePlainSQL("SELECT Vaccine.VName AS Vaccine,
-                    P.PName AS Patient,
-                    C.ClinicName AS Clinic, 
-                    C.StreetAddress AS ClinicAddress, 
-                    A.City AS ClinicCity,
-                    V.Time AS AppointmentTime
-					FROM VaccinationAppointment V, Clinic C, ClinicAddress A, Patient P, Vaccine
-					WHERE V.NurseID = '$nID'
-                    AND P.PersonalHealthNumber = V.PatientPHN
-                    AND C.ClinicID = V.ClinicID
-                    AND A.PostalCode = C.PostalCode
-                    AND V.VaccineID = Vaccine.ID 
-                    ORDER BY V.Time asc");                    
+                    */
+                    $i = 0;
+                    // this is working.
+                    while ($appointmentInfo = OCI_Fetch_Array($result, OCI_BOTH)) {
+                        echo "<h5>Vaccine: $appointmentInfo[0]  <br />
+                        Patient:  $appointmentInfo[1] <br />
+                        Clinic: $appointmentInfo[2]  <br />
+                        Address: $appointmentInfo[3] <br />
+                        City: $appointmentInfo[4] <br />
+                        Date & Time: $appointmentInfo[5]</h5>";
+                        $i += 1;
+                    }
 
-                    echo "<table align='center'>";
+                    if ($i == 0) {
+                        echo "<h5>You have no upcoming appointments!</h5>";
+                    }
+
+                    $result = executePlainSQL(
+                        "SELECT Vaccine.VName AS Vaccine,
+                        P.PName AS Patient,
+                        C.ClinicName AS Clinic, 
+                        C.StreetAddress AS ClinicAddress, 
+                        A.City AS ClinicCity,
+                        V.Time AS AppointmentTime
+                        FROM VaccinationAppointment V, Clinic C, ClinicAddress A, Patient P, Vaccine
+                        WHERE V.NurseID = '$nID'
+                        AND P.PersonalHealthNumber = V.PatientPHN
+                        AND C.ClinicID = V.ClinicID
+                        AND A.PostalCode = C.PostalCode
+                        AND V.VaccineID = Vaccine.ID"
+                    );
+
+                    echo "<table>";
                     echo "<tr>
                         <th>Vaccine</th>
                         <th>Patient</th>
@@ -73,9 +92,7 @@
                         <th>Date & Time</th>
                     </tr>";
                     
-                    
                     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                        
                         echo "<tr>
                             <td>" . $row[0] . "</td>
                             <td>" . $row[1] . "</td>
@@ -89,16 +106,21 @@
                 disconnectFromDB();                
             }            
         }
+     
+
+        function handleloginRequest() {
+            global $db_conn;
+            
+            OCICommit($db_conn);
+        }
 
         initialization();
 		?>
-        <br />
-        <br />
-        
-        <!-- Sign out -->
-            <form method="POST" action="NurseLogin.php" class='center'> 
 
-        <input type="submit" value="Sign out" name="signout"></p>
-        </form>
+<!-- logout option -->
+    <form method="POST" action="Vaccination.php"> <!--refresh page when submitted-->
+    <input type="submit" value="Logout" name="logout"></p>
+    </form>
+
 	</body>
 </html>

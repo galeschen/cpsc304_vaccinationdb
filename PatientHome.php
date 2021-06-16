@@ -50,7 +50,7 @@
                 $name = $nameResult[0];
                 
 				// WELCOME STATEMENT
-                echo "<h3>Welcome " . $name . "!</h3>";
+                echo "<h2>Welcome " . $name . "!</h2>";
 
                 $result = executePlainSQL(
                     "SELECT * 
@@ -62,6 +62,7 @@
                     )"
                 );
 
+                echo "<h2>Here is your information:</h2>";
                 echo "<table>";
                 echo "<tr>
                     <th>Personal Health Number</th>
@@ -88,7 +89,7 @@
                 
                 // UPCOMING APPOINTMENTS
                 // this is working.
-                echo "<h4> &nbsp &nbsp &nbsp This is your next vaccination appointment:</h4>";
+                echo "<h2>This is your next vaccination appointment:</h2>";
 				$result = executePlainSQL("SELECT Vaccine.VName AS Vaccine,
                     C.ClinicName AS Clinic, 
                     C.StreetAddress AS ClinicAddress, 
@@ -226,5 +227,9 @@
         initialization();
         handlePostRequest();
 		?>
+
+    <form method="POST" action="Vaccination.php"> <!--refresh page when submitted-->
+    <input type="submit" value="Logout" name="logout"></p>
+    </form>
 	</body>
 </html>

@@ -1,21 +1,28 @@
 <html>
     <head>
-    <link rel="stylesheet" href = "./css/Clerk.css">
         <title>CPSC 304 PHP/Clerk Main Page</title>
     </head>
 
+    <style>
+    h2 {text-align: center;}
+    form {text-align: center;}
+    </style>
     <body>
     <br />
     <br />
         <h2>Clerk</h2>
 
         <hr />
+        <br />
+        <br />
+        <br />
+        <br />
 
-        <form method="POST" class= 'center'> 
-            <h4>Select Patient's Vaccine Profile</h4>
+        <form method="POST"> 
+            <h2>Select Patient's Vaccine Profile</h2>
             Vaccine ID: <input type="text" name="VP_VaccineID"> <br /><br />
             Patient's PHN: <input type="number" name="VP_PatientPHN"> <br /><br />
-            <h4>Changes to Patient's Vaccine Profile:</h4>
+            <h2>Changes to Patient's Vaccine Profile:</h2>
             Remaining Doses: <input type="number" name="VP_RemainingDoses"> <br /><br />
             Immunity Expiration Date: <input type="date" name = "VP_ImmunityExpirationDate"> <br /> <br /> 
 
@@ -24,8 +31,8 @@
 
         <hr />
 
-        <form method="POST" class= 'center'> 
-            <h4>Reset Patient's Account Password</h4>
+        <form method="POST"> 
+            <h2>Reset Patient's Account Password</h2>
             Username: <input type="text" name="RP_Username"> <br /><br />
             
             New Password: <input type="text" name="RP_ppassword"> <br /><br />
@@ -35,15 +42,15 @@
 
         <hr />
 
-        <form method="POST" action="ClerkLogin.php" class= 'center'>
-            <input type="submit" value="Sign Out" name="Sign Out"></p>
+        <form method="POST" action="Vaccination.php">
+            <input type="submit" value="Exit" name="Exit"></p>
         </form>
 
-        <form method="POST" action="ClerkHome.php" class= 'center'>
+        <form method="POST" action="ClerkHome.php">
             <input type="submit" value="Show all Vaccination Appointments" name="printAllVaccineAppointments"></p>
         </form>
 
-        <form method="POST" action="ClerkHome.php" class= 'center'>
+        <form method="POST" action="ClerkHome.php">
             <input type="submit" value="Show all Patients" name="printAllPatients"></p>
         </form>
 
@@ -61,7 +68,7 @@
                 FULL OUTER JOIN VaccinePatient
                 ON VaccinationAppointment.PatientPHN = VaccinePatient.PatientPHN"
             );
-            echo "<table align='center'>";
+            echo "<table>";
             echo "<tr>
                     <th>Appointment ID</th>
                     <th>Clinic ID</th>
@@ -100,7 +107,7 @@
                 INNER JOIN PatientAccount
                 ON Patient.PersonalHealthNumber = PatientAccount.PersonalHealthNumber"
             );
-            echo "<table align='center'>";
+            echo "<table>";
             echo "<tr>
                     <th>Personal Health Number</th>
                     <th>Name</th>
@@ -148,7 +155,7 @@
             $PatientUsername = $_POST["RP_Username"];
             $NewPassword = $_POST["RP_ppassword"];
             executePlainSQL("UPDATE PatientAccount SET ppassword = '$NewPassword' WHERE Username = '$PatientUsername'");
-            echo "<h6>Password for '$PatientUsername' updated to '$NewPassword'</h6><br>";
+            echo "Password for '$PatientUsername' updated to '$NewPassword'<br>";
             OCICommit($db_conn);
         }
 
