@@ -7,6 +7,20 @@
     <br />
     <br />       
 
+    <form method="POST"> 
+        <h2>Reset Your Account Password</h2>
+        New Password: <input type="text" name="RP_ppassword"> <br /><br />
+        <input type="submit" value="Reset Password" name="updatePatientAccountPassword"></p>
+    </form>   
+
+    <form method="POST"> 
+        <h2>Update Address</h2>
+        Street Address: <input type="text" name="UA_StreetAddress"> <br /><br />
+        Postal Code: <input type="text" name="UA_PostalCode"> <br /><br />
+        City: <input type="text" name="UA_City"> <br /><br />
+        <input type="submit" value="Update Address" name="updatePatientAccountAddress"></p>
+    </form>   
+
         <?php
         include 'oracle_connection.php';
        
@@ -37,6 +51,37 @@
                 
 				// WELCOME STATEMENT
                 echo "<h3>Welcome " . $name . "!</h3>";
+
+                $result = executePlainSQL(
+                    "SELECT * 
+                    FROM Patient
+                    WHERE Patient.PersonalHealthNumber = (
+                        SELECT PersonalHealthNumber
+                        FROM PatientAccount
+                        WHERE Username = '$pusername'
+                    )"
+                );
+
+                echo "<table>";
+                echo "<tr>
+                    <th>Personal Health Number</th>
+                    <th>Name</th>
+                    <th>Sex</th>
+                    <th>Street Address</th>
+                    <th>Postal Code</th>
+                    <th>Date of Birth</th>
+                </tr>";
+                while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                    echo "<tr>
+                        <td>" . $row[0] . "</td>
+                        <td>" . $row[1] . "</td>
+                        <td>" . $row[2] . "</td>
+                        <td>" . $row[3] . "</td>
+                        <td>" . $row[4] . "</td>
+                        <td>" . $row[5] . "</td>
+                    </tr>"; //or just use "echo $row[0]"
+                }
+                echo "</table>";
 
                 // debugging
                 // echo "<h3>(Debug) Welcome " . $phn . "!</h3>";
@@ -113,7 +158,64 @@
                 disconnectFromDB();                
             }            
         }
-     
+
+        function updatePatientAccountPassword() {
+            global $db_conn;
+            $PatientUsername = $_GET['pusername'];
+            $NewPassword = $_POST["RP_ppassword"];
+            executePlainSQL("UPDATE PatientAccount SET ppassword = '$NewPassword' WHERE Username = '$PatientUsername'");
+            echo "Password for '$PatientUsername' updated to '$NewPassword'<br>";
+            OCICommit($db_conn);
+        }
+
+        // TODO: DOESNT WORK CORRECTLY
+        function updatePatientAccountAddress() {
+            echo "TESTING WORKING <br>";
+            global $db_conn;
+            $PatientUsername = $_GET['pusername'];
+            
+            $NewStreetAddress = $_POST['UA_StreetAddress'];
+            $NewPostalCode = $_POST['UA_PostalCode'];
+            $NewCity = $_POST['UA_City'];
+            
+            // TODO: MAKE IT CHECK IF POSTAL CODE ALREADY EXISTS FIRST
+            /*
+            executePlainSQL(
+                "INSERT INTO PatientAddress(PostalCode, City)
+                SELECT '$NewPostalCode', '$NewCity'
+                WHERE NOT EXISTS(
+                    SELECT *
+                    FROM PatientAddress
+                    WHERE PostalCode = '$NewPostalCode'
+                )"
+            );
+            */
+            
+            executePlainSQL(
+                "UPDATE Patient 
+                SET StreetAddress = '$NewStreetAddress', PostalCode = '$NewPostalCode'
+                WHERE PersonalHealthNumber = (
+                    SELECT PersonalHealthNumber
+                    FROM PatientAccount
+                    WHERE Username = '$PatientUsername'
+                )"
+            );
+            
+            //echo "Address for '$PatientUsername' updated<br>";
+            OCICommit($db_conn);
+        }
+
+        function handlePostRequest() {
+            if (connectToDB()) {
+                if (array_key_exists('updatePatientAccountPassword', $_POST)) {
+                    updatePatientAccountPassword();
+                }
+                else if (array_key_exists('updatePatientAccountAddress', $_POST)) {
+                    updatePatientAccountAddress();
+                }
+                disconnectFromDB();
+            }
+        }
 
         function handleloginRequest() {
             global $db_conn;
@@ -122,6 +224,7 @@
         }
 
         initialization();
+        handlePostRequest();
 		?>
 	</body>
 </html>
