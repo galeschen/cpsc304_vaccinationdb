@@ -100,8 +100,8 @@
             } 
 
             if ($login) {
-                // executePlainSQL("INSERT INTO Patient VALUES ($phn,'$name','$sex','$address','$postal',DATE '$birthday')");
-                // executePlainSQL("INSERT INTO PatientAccount VALUES ('$username','$password',$phn)");
+                executePlainSQL("INSERT INTO Patient VALUES ($phn,'$name','$sex','$address','$postal',DATE '$birthday')");
+                executePlainSQL("INSERT INTO PatientAccount VALUES ('$username','$password',$phn)");
                 header("Location: PatientSignUpSuccess.php");
             }
             OCICommit($db_conn);
