@@ -11,5 +11,7 @@ CREATE TABLE VaccinationAppointment(
     FOREIGN KEY(BookerPHN) REFERENCES Adult(PersonalHealthNumber)
         ON DELETE CASCADE,
     FOREIGN KEY(VaccineID,PatientPHN) REFERENCES VaccinePatient
+        ON DELETE CASCADE,
+    FOREIGN KEY(NurseID) REFERENCES Nurse(ID)
         ON DELETE CASCADE
 );
