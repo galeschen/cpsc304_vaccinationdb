@@ -12,3 +12,23 @@ VALUES ('VR821','Sucrose');
 
 INSERT INTO Contains
 VALUES ('VR821','Aluminum phosphate');
+
+-- All vaccines contain water --
+INSERT INTO Contains
+VALUES ('VV381','Water');
+
+INSERT INTO Contains
+VALUES ('VH721','Water');
+
+INSERT INTO Contains
+VALUES ('VH722','Water');
+
+INSERT INTO Contains
+VALUES ('VR821','Water');
+
+INSERT INTO Contains
+VALUES ('VV341','Water');
+
+INSERT INTO Contains
+VALUES ('VG921','Water');
+

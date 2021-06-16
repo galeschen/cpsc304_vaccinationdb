@@ -12,3 +12,6 @@ VALUES ('Neomycin');
 
 INSERT INTO Ingredient
 VALUES ('Gelatin');
+
+INSERT INTO Ingredient
+VALUES ('Water');

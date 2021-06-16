@@ -63,12 +63,12 @@
 		?>
 	
 
-     <form method="POST">
+     <form method="POST" class='center'>
 
             <input type="submit" value="Manage Vaccine" name="ManagerVaccine"></p> 
     </form>
 
-    <form method="POST" action="ManagerLogin.php"> 
+    <form method="POST" action="ManagerLogin.php" class='center'> 
 
             <input type="submit" value="Sign Out" name="signout"></p>
     </form>
