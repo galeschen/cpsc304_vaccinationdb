@@ -16,13 +16,18 @@
         <br />
 
         <!-- Login block -->
-        <form method="POST" action="ManagerLogin.php"> <!--refresh page when submitted-->
+        <form method="POST" class='center'> 
             <input type="hidden" id="loginRequest" name="loginRequest">
             
             Manager ID: <input type="text" name="Manager_ID"> <br /><br />
-            Password: <input type="text" name="password"> <br /><br />
+            Password: <input type="password" name="password"> <br /><br />
 
             <input type="submit" value="login" name="login"></p>
+        </form>
+
+        <form method="POST" action="Vaccination.php" class='center'> 
+
+            <input type="submit" value="Back" name="back"></p>
         </form>
 
         <br />

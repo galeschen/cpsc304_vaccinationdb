@@ -35,6 +35,12 @@
         </form>
         <br />
 
+        <!-- Back to main -->
+        <form method="POST" action="Vaccination.php" class='center'> 
+
+            <input type="submit" value="Back" name="back"></p>
+        </form>
+
         <?php
         include 'oracle_connection.php';
         
