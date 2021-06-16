@@ -7,9 +7,9 @@
     <br />
     <br />
         <h2>Log in</h2>
-
         <hr />
         <br />
+        <h3>Patient</h3>
         <br />
         <br />
         <br />
@@ -44,12 +44,16 @@
             $result = executePlainSQL("SELECT ppassword FROM PatientAccount
                                                 where Username = '$username'");
             $correctpassword = OCI_Fetch_Array($result, OCI_BOTH);
+            // if you can't find a password associated w/ the given username...
             if($correctpassword[0] == NULL) {
-                echo "Username cannot be found";
+                echo "Patient username cannot be found";
+            // if the inserted password matches the password associated w/ the given username...
             } else if ($password == $correctpassword[0]) {
-                header("Location: PatientHome.php");
+                header("Location: PatientHome.php?pusername=".$Patient_username);
+                exit();
+            // if you can find a password associated w/ the given username but the inserted password does not match up...
             } else {
-                echo "incorrect password";
+                echo "Incorrect password";
             }
             OCICommit($db_conn);
         }
