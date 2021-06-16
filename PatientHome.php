@@ -55,17 +55,25 @@
                     AND A.PostalCode = C.PostalCode
                     AND V.VaccineID = Vaccine.ID");
                     
-                    // TODO: TRYING TO MAKE IT SO THAT THE "NO APPOINTMENTS" MESSAGE ONLY SHOWS UP IF THE PATIENT HAS NO APPOINTMENTS
+                    /*
                     if ($result[0] == NULL) {
                         echo "<h5>You have no upcoming appointments!</h5>";
                     }
+                    */
                     // this is working
+                    $i = 0;
                     while ($appointmentInfo = OCI_Fetch_Array($result, OCI_BOTH)) {
                         echo "<h5>Vaccine: $appointmentInfo[0]  <br />
                         Clinic: $appointmentInfo[1]  <br />
                         Address: $appointmentInfo[2], $appointmentInfo[3] <br />
                         Time: $appointmentInfo[4]</h5>";
+                        $i += 1;
                     }
+                    
+                    if ($i == 0) {
+                        echo "<h5>You have no upcoming appointments!</h5>";
+                    }
+
                     $result = executePlainSQL(
                         "SELECT Vaccine.VName AS Vaccine,
                         C.ClinicName AS Clinic, 
