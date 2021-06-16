@@ -55,6 +55,7 @@
                 echo "Patient username cannot be found";
             // if the inserted password matches the password associated w/ the given username...
             } else if ($password == $correctpassword[0]) {
+                disconnectFromDB();
                 header("Location: PatientHome.php?pusername=".$username);
                 exit();
             } else {
