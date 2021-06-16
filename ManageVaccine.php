@@ -32,7 +32,7 @@
                                          
                 $countResult = executePlainSQL("SELECT COUNT(*) FROM Vaccine");
                 $count = OCI_Fetch_Array($countResult, OCI_BOTH);
-                echo "<br /> <h4> &nbsp&nbsp&nbsp" . $count[0] . " vaccines are found! <h4> <br />";
+                echo "<br /> <h4> &nbsp&nbsp&nbsp" . $count[0] . " vaccines have been found! <h4> <br />";
 
                 disconnectFromDB();                
             }        
@@ -164,7 +164,7 @@
         <form method="POST" id='check'> 
         <input type="radio" name="checkradio" value="Default" onchange="this.form.submit()" <?php echo ($check1==0 && $check2==0 ? 'checked' : '');?>> View all vaccines<br>    
         <input type="radio" name="checkradio" value="View" onchange="this.form.submit()" <?php echo ($check1==1 ? 'checked' : '');?>> View ingredients which are in all vaccines<br>
-        <input type="radio" name="checkradio" value="Avg" onchange="this.form.submit()" <?php echo ($check2==1 ? 'checked' : '');?>> View vaccines whose costs are high than the average<br>
+        <input type="radio" name="checkradio" value="Avg" onchange="this.form.submit()" <?php echo ($check2==1 ? 'checked' : '');?>> View vaccines whose costs are higher than the average<br>
     
         </form>
 

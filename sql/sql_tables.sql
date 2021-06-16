@@ -239,7 +239,7 @@ INSERT INTO Ingredient
 VALUES ('Water');
 
 INSERT INTO Manager
-VALUES ('M4133','Marcus Cutter', 'TrustNaturalRecursion');
+VALUES ('M4133','Marcus Cutter', 'mmmchailatte');
 INSERT INTO Manager
 VALUES ('M2346','Isabel Lovelace', 'geneticallymodifiedturnips');
 INSERT INTO Manager
