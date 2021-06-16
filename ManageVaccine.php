@@ -23,7 +23,11 @@
               echo "Url has no user";
             }
 
-            // GET VACCINE NUMBER
+            
+                           
+        }
+        // GET VACCINE NUMBER
+        function countVaccineInfo() {
             if (connectToDB()) {
                                          
                 $countResult = executePlainSQL("SELECT COUNT(*) FROM Vaccine");
@@ -31,8 +35,8 @@
                 echo "<br /> <h4> &nbsp&nbsp&nbsp" . $count[0] . " vaccines are found! <h4> <br />";
 
                 disconnectFromDB();                
-            }                         
-        }
+            }        
+        } 
      
         // GET VACCINE INFO
         function showVaccineInfo() {
@@ -141,6 +145,7 @@
             $check2=0;
             ob_end_clean();
             ob_start();
+            countVaccineInfo();
             showVaccineInfo();
         }  else if (isset($_POST['checkradio']) && $_POST['checkradio'] == 'Avg'){
             $check2=1;

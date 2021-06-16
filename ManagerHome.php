@@ -59,13 +59,6 @@
                 disconnectFromDB();                
             }            
         }
-     
-
-        function handleloginRequest() {
-            global $db_conn;
-            
-            OCICommit($db_conn);
-        }
 
         initialization();
         if (isset($_POST['ManagerVaccine'])) {

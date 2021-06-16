@@ -48,11 +48,7 @@
                 $nurse = OCI_Fetch_Array($nurseResult, OCI_BOTH);
                 if($nurse[0] != NULL){
                     executePlainSQL("DELETE FROM Nurse where ID='$dismissID'");  
-                    echo "<h6 text_align='center>Nurse " . $dismissID . " are removed!</h6>";
-                    disconnectFromDB();  
-                    OCICommit($db_conn);
-                    header("Location: ManageNurse.php?mID=".$mID);
-                     exit();
+                    echo "<h6 text_align='center>Nurse " . $dismissID . " are removed!</h6>";                    
                 } else {
                     echo "<h6>Nurse ID not found!</h6>";
                 }           
@@ -71,6 +67,8 @@
             exit();
         } else if (isset($_POST['dismiss'])) {
             dismissNurse();
+            header("Location: ManageNurse.php?mID=".$mID);
+            exit();
         }
 		?>
     

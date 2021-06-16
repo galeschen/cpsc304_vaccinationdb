@@ -46,6 +46,7 @@
             if($correctpassword[0] == NULL) {
                 echo "Manager ID cannot be found";
             } else if ($password == $correctpassword[0]) {
+                disconnectFromDB();
                 header("Location: ManagerHome.php?mID=".$Manager_ID);
                 exit();
             } else {
