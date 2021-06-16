@@ -18,8 +18,6 @@
         <br />
         <br />
 
-        
-        
         <form method="POST"> 
             <h2>Select Patient's Vaccine Profile</h2>
             Vaccine ID: <input type="text" name="VP_VaccineID"> <br /><br />
@@ -136,7 +134,6 @@
             OCICommit($db_conn);
         }
 
-        // TODO: MAKE IT WORK FOR DATE TOO
         function changeVaccinationStatus() {
             global $db_conn;
             $VaccineID = $_POST["VP_VaccineID"];
