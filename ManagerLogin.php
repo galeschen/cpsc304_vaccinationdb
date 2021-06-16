@@ -25,6 +25,11 @@
             <input type="submit" value="login" name="login"></p>
         </form>
 
+        <form method="POST" action="Vaccination.php" class='center'> 
+
+            <input type="submit" value="Back" name="back"></p>
+        </form>
+
         <br />
 
         <?php
