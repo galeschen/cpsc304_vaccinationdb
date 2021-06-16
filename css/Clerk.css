@@ -1,26 +1,26 @@
 h2 {
     text-align: center;
     color: rgb(12, 71, 88);
-    font-size: 64px;
+    font-size: 70px;
     font-family: 'Times New Roman', Times, serif;
 }
 
 h4 {
-    text-align:left;
-    color: rgb(228, 70, 31);
+    text-align:center;
+    color: rgb(63, 64, 124);
     font-size: 40px;
     font-family: 'Times New Roman', Times, serif; 
 } 
 
 h5 {
-    text-align:left;
+    text-align:center;
     color: rgb(10, 46, 38);
     font-size: 30px;
     font-family: 'Times New Roman', Times, serif; 
 } 
 
 h6 {
-    text-align:right;
+    text-align:center;
     color: rgb(10, 46, 38);
     font-size: 25px;
     font-family: 'Times New Roman', Times, serif; 
