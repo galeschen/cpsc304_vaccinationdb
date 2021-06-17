@@ -1,13 +1,8 @@
 <html>
     <head>
+    <link rel = "stylesheet" href = "./css/Main.css">
         <title>CPSC 304 PHP/VaccinationRegistration</title>
     </head>
-
-    <style>
-    h2 {text-align: center;}
-    h3 {text-align: center;}
-    form {text-align: center;}
-    </style>
     <body>
         <h2>Welcome</h2>
 
