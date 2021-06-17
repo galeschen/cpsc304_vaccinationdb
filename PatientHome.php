@@ -1,32 +1,35 @@
 <html>
     <head>
-    <link rel="stylesheet" href = "./css/Patient.css">
+        <link rel="stylesheet" href = "./css/Patient.css">
         <title>CPSC 304 PHP/Patient Home</title>
     </head>
     <body>
     <br />
     <br />       
 
-    <form method="POST"> 
-        <h2>Reset Your Account Password</h2>
+    <h3>Reset Your Account Password</h3>
+    <form method="POST" class ='center'> 
+        
         New Password: <input type="text" name="RP_ppassword"> <br /><br />
         <input type="submit" value="Reset Password" name="updatePatientAccountPassword"></p>
     </form>   
 
-    <form method="POST"> 
-        <h2>Update Address</h2>
+    <h3>Update Address</h3>
+    <form method="POST" class ='center'> 
+        
         Street Address: <input type="text" name="UA_StreetAddress"> <br /><br />
         Postal Code: <input type="text" name="UA_PostalCode"> <br /><br />
         City: <input type="text" name="UA_City"> <br /><br />
         <input type="submit" value="Update Address" name="updatePatientAccountAddress"></p>
     </form>
 
-    <form method="POST"> 
+    <form method="POST" class ='center'> 
         <input type="submit" value="Show Appointment Booking Info" name="printBookingInfo"></p>
     </form>
 
-    <form method="POST"> 
-        <h2>Book your next appointment</h2>
+    <h3>Book your next appointment</h3>
+    <form method="POST" class ='center'> 
+        
         Appointment ID: <input type="text" placeholder="5 Digits Max" name="BA_AppointmentID"> <br /><br />
         Clinic ID: <input type="text" placeholder="Pick from Available" name="BA_ClinicID"> <br /><br />
         Date and Time: <input type="datetime-local" placeholder = "yyyy-mm-dd hh:mm:ss" name="BA_Time"> <br /><br />
@@ -36,8 +39,9 @@
         <input type="submit" value="Book Appointment" name="bookAppointment"></p>
     </form>
 
-    <form method="POST"> 
-        <h2>Cancel Appointment</h2>
+    <h3>Cancel Appointment</h3>
+    <form method="POST" class ='center'> 
+        
         Appointment ID: <input type="text" placeholder="Select from appointment" name="CA_AppointmentID"> <br /><br />
         Clinic ID: <input type="text" placeholder="Select from appointment" name="CA_ClinicID"> <br /><br />
         <input type="submit" value="Cancel Appointment" name="cancelAppointment"></p>
@@ -85,8 +89,8 @@
                     )"
                 );
 
-                echo "<h2>Here is your information:</h2>";
-                echo "<table>";
+                echo "<h3>Here is your information:</h3>";
+                echo "<table align='center'>";
                 echo "<tr>
                     <th>Personal Health Number</th>
                     <th>Name</th>
@@ -112,7 +116,7 @@
                 
                 // UPCOMING APPOINTMENTS
                 // this is working.
-                echo "<h2>These are your upcoming vaccination appointments:</h2>";
+                echo "<h3>These are your upcoming vaccination appointments:</h3>";
 				$result = executePlainSQL("SELECT Vaccine.VName AS Vaccine,
                     C.ClinicName AS Clinic, 
                     C.StreetAddress AS ClinicAddress, 
@@ -344,17 +348,11 @@
             }
         }
 
-        function handleloginRequest() {
-            global $db_conn;
-            
-            OCICommit($db_conn);
-        }
-
         initialization();
         handlePostRequest();
 		?>
 
-    <form method="POST" action="Vaccination.php"> <!--refresh page when submitted-->
+    <form method="POST" action="PatientLogin.php" class='center'> <!--refresh page when submitted-->
     <input type="submit" value="Logout" name="logout"></p>
     </form>
 	</body>

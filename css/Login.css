@@ -10,6 +10,26 @@ h3 {
     font-size: 30px;
     font-family: 'Times New Roman', Times, serif; 
 } 
+h5 {
+    text-align:left;
+    color: rgb(10, 46, 38);
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif; 
+} 
+form {
+    text-align: center;
+}
+
+.center {
+    text-align: center;
+}
+
+h6 {
+    text-align:right;
+    color: rgb(10, 46, 38);
+    font-size: 25px;
+    font-family: 'Times New Roman', Times, serif; 
+} 
 
 input[type='submit'] {
     background-color: #fdeccc;
@@ -25,5 +45,3 @@ input[type='submit'] {
     cursor: pointer;
     
   }
-
-form {text-align: center;}

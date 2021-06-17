@@ -20,7 +20,7 @@
             <input type="hidden" id="loginRequest" name="loginRequest">
             
             Username: <input type="text" name="username"> <br /><br />
-            Password: <input type="text" name="password"> <br /><br />
+            Password: <input type="password" name="password"> <br /><br />
 
             <input type="submit" value="login" name="login"></p>
         </form>
@@ -55,6 +55,7 @@
                 echo "Patient username cannot be found";
             // if the inserted password matches the password associated w/ the given username...
             } else if ($password == $correctpassword[0]) {
+                disconnectFromDB();
                 header("Location: PatientHome.php?pusername=".$username);
                 exit();
             } else {

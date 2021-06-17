@@ -1,7 +1,59 @@
-/* h2 {
+h2 {
     text-align: center;
-    color: rgb(9, 63, 80);
-    font-size: 64px;
+    color: rgb(12, 71, 88);
+    font-size: 70px;
     font-family: 'Times New Roman', Times, serif;
-} */
-form {text-align: center;}
+}
+
+h3 {
+    text-align:center;
+    color: rgb(63, 64, 124);
+    font-size: 40px;
+    font-family: 'Times New Roman', Times, serif; 
+}  
+
+
+h5 {
+    text-align:center;
+    color: rgb(6, 59, 48);
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif; 
+} 
+
+h6 {
+    text-align:center;
+    color: rgb(10, 46, 38);
+    font-size: 25px;
+    font-family: 'Times New Roman', Times, serif; 
+} 
+
+table {
+    width: 90%;
+    border: 1px solid black;
+    text-align: center;
+    padding: 22px 10px;
+    font-size: 25px;
+    font-family: 'Times New Roman', Times, serif; 
+    border-spacing:0 22px;
+}
+
+th {
+    height: 70px;
+  }
+
+.center {
+    text-align: center;
+}
+
+input[type='submit'] {
+    background-color: #d1f1bc;
+    color: rgb(6, 29, 58);
+    padding: 15px 32px;
+   
+    text-decoration: none;
+    font-size: 16px;
+
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+} 
