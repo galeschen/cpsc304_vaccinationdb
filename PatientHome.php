@@ -184,8 +184,8 @@
                             <td>" . $row[5] . "</td>
                             <td>" . $row[6] . "</td>
                         </tr>"; //or just use "echo $row[0]"
-                    // }
-                    // echo "</table>";
+                    }
+                    echo "</table>";
                 disconnectFromDB();                
             }            
         }
