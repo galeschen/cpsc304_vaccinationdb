@@ -12,6 +12,7 @@
         $mID = NULL;
        $check1 = 0;
        $check2 = 0;
+       $check3 = 0;
        
        
         function initialization(){
@@ -32,7 +33,7 @@
                                          
                 $countResult = executePlainSQL("SELECT COUNT(*) FROM Vaccine");
                 $count = OCI_Fetch_Array($countResult, OCI_BOTH);
-                echo "<br /> <h4> &nbsp&nbsp&nbsp" . $count[0] . " vaccines have been found! <h4> <br />";
+                echo "<br /> <h4> &nbsp&nbsp&nbsp" . $count[0] . " vaccines are found! <h4> <br />";
 
                 disconnectFromDB();                
             }        
@@ -132,6 +133,25 @@
             OCICommit($db_conn);
         }
 
+        // GET VACCINE INFO
+        function showVacCostInfo() {
+            global $db_conn;
+            if (connectToDB()) {
+                
+                $result = executePlainSQL("SELECT v.IsFor,avg(Cost) from Vaccine v group by IsFor having avg(cost)>(SELECT avg(cost) FROM Vaccine)");
+                echo "<table align='center'>";
+                echo "<tr><th>Vaccines for</th><th>Average Cost</th></tr>";
+                while ($VaccineCostInfo = OCI_Fetch_Array($result, OCI_BOTH)) {
+                    echo "<tr><td>" . $VaccineCostInfo[0] . "</td><td> "
+                    . $VaccineCostInfo[1] . "</td>";
+                }
+                echo "</table>";                              
+
+
+                disconnectFromDB();                
+            }         
+        }
+
         initialization();
         ob_start();
         
@@ -143,6 +163,7 @@
         } else if (isset($_POST['checkradio']) && $_POST['checkradio'] == 'Default' || !isset($_POST['checkradio'])){
             $check1=0;
             $check2=0;
+            $check3=0;
             ob_end_clean();
             ob_start();
             countVaccineInfo();
@@ -152,6 +173,11 @@
             ob_end_clean();
             ob_start();
             showAvgInfo();
+        }  else if (isset($_POST['checkradio']) && $_POST['checkradio'] == 'VacCost'){
+            $check3=1;
+            ob_end_clean();
+            ob_start();
+            showVacCostInfo();
         }        
         
         if (isset($_POST['back'])) {
@@ -162,9 +188,10 @@
         <br />
     
         <form method="POST" id='check'> 
-        <input type="radio" name="checkradio" value="Default" onchange="this.form.submit()" <?php echo ($check1==0 && $check2==0 ? 'checked' : '');?>> View all vaccines<br>    
+        <input type="radio" name="checkradio" value="Default" onchange="this.form.submit()" <?php echo ($check1==0 && $check2==0 && $check3==0 ? 'checked' : '');?>> View all vaccines<br>    
         <input type="radio" name="checkradio" value="View" onchange="this.form.submit()" <?php echo ($check1==1 ? 'checked' : '');?>> View ingredients which are in all vaccines<br>
-        <input type="radio" name="checkradio" value="Avg" onchange="this.form.submit()" <?php echo ($check2==1 ? 'checked' : '');?>> View vaccines whose costs are higher than the average<br>
+        <input type="radio" name="checkradio" value="Avg" onchange="this.form.submit()" <?php echo ($check2==1 ? 'checked' : '');?>> View vaccines whose costs are high than the average<br>
+        <input type="radio" name="checkradio" value="VacCost" onchange="this.form.submit()" <?php echo ($check3==1 ? 'checked' : '');?>> View the disease targeted by the vaccines and its average costs which are higher than the average costs of all vaccine<br>
     
         </form>
 

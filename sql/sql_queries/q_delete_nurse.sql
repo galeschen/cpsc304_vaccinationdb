@@ -4,5 +4,6 @@
 -- Based on input, deletion should be performed.
 
 -- Deletes nurse with given Nurse ID. Nurse ID is user specified.
+
 DELETE FROM Nurse 
 WHERE ID = '$nurseID';
