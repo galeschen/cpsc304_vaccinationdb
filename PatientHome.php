@@ -202,7 +202,6 @@
             OCICommit($db_conn);
         }
 
-        // TODO: DEAL IWTH integrity constraint (ORA_ICA29.SYS_C00403362) violated ERROR
         function updatePatientAccountPassword() {
             global $db_conn;
             $PatientUsername = $_GET['pusername'];
@@ -212,7 +211,6 @@
             OCICommit($db_conn);
         }
 
-        // TODO: DOESNT WORK CORRECTLY
         function updatePatientAccountAddress() {
             global $db_conn;
             $PatientUsername = $_GET['pusername'];
@@ -221,8 +219,9 @@
             $NewPostalCode = $_POST['UA_PostalCode'];
             $NewCity = $_POST['UA_City'];
 
-
-            if (executePlainSQL("SELECT COUNT(*) FROM PatientAddress WHERE PostalCode = $NewPostalCode") == 0) {
+            $countresult = executePlainSQL("SELECT COUNT(*) FROM PatientAddress WHERE PostalCode = '$NewPostalCode'");
+            $count = OCI_Fetch_Array($countresult, OCI_BOTH);
+            if ($count[0] == 0) {
                 executePlainSQL(
                     "INSERT INTO PatientAddress (PostalCode, City)
                     VALUES('$NewPostalCode', '$NewCity')"
