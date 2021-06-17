@@ -164,28 +164,28 @@
                     );
 
                     // we also had that information in table form:
-                    // echo "<table>";
-                    // echo "<tr>
-                    //     <th>Appointment ID</th>
-                    //     <th>Clinic ID</th>
-                    //     <th>Vaccine</th>
-                    //     <th>Clinic</th>
-                    //     <th>Address</th>
-                    //     <th>City</th>
-                    //     <th>Time</th>
-                    // </tr>";
-                    // while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                    //     echo "<tr>
-                    //         <td>" . $row[0] . "</td>
-                    //         <td>" . $row[1] . "</td>
-                    //         <td>" . $row[2] . "</td>
-                    //         <td>" . $row[3] . "</td>
-                    //         <td>" . $row[4] . "</td>
-                    //         <td>" . $row[5] . "</td>
-                    //         <td>" . $row[6] . "</td>
-                    //     </tr>"; //or just use "echo $row[0]"
-                    // }
-                    // echo "</table>";
+                    echo "<table>";
+                    echo "<tr>
+                         <th>Appointment ID</th>
+                         <th>Clinic ID</th>
+                         <th>Vaccine</th>
+                         <th>Clinic</th>
+                         <th>Address</th>
+                         <th>City</th>
+                         <th>Time</th>
+                     </tr>";
+                     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                         echo "<tr>
+                            <td>" . $row[0] . "</td>
+                            <td>" . $row[1] . "</td>
+                            <td>" . $row[2] . "</td>
+                            <td>" . $row[3] . "</td>
+                            <td>" . $row[4] . "</td>
+                            <td>" . $row[5] . "</td>
+                            <td>" . $row[6] . "</td>
+                        </tr>"; //or just use "echo $row[0]"
+                    }
+                    echo "</table>";
                 disconnectFromDB();                
             }            
         }
