@@ -1,13 +1,15 @@
 # project_m6i8r_u4c3b_y7i2b
 ## Description – what was accomplished?
-A website that provides access to a vaccination database for vaccination booking. It has four types of users: clinic managers, nurses, clerks, and patients. A set of different SQL queries for different user types are available through the website. Clerks help book vaccination appointments and update patient information. Patients can book their own appointments and view their upcoming appointments. Nurses can view their upcoming appointments. Managers can filter for various vaccines and edit the nurses at their clinic.
+An UI that provides access to a vaccination database for vaccination booking. It has four types of users: clinic managers, nurses, clerks, and patients. A set of different SQL queries for different user types are available through the website. Clerks help book vaccination appointments and update patient information. Patients can book their own appointments and view their upcoming appointments. Nurses can view their upcoming appointments. Managers can filter for various vaccines and edit the nurses at their clinic.
 
 ## How the final schema differed from the schema turned in, and why?
-The final schema did not differ from the schema turned in, except for a few minor changes, such as changes to data types (e.g. data type for VaccinationAppointment.time from TIMESTAMP to DATE).
+The final schema did not differ from the schema turned in, except for a few minor changes, such as changes to data types (e.g. data type for VaccinationAppointment.time from TIMESTAMP to DATE). These changes were made because the old data types caused errors, or the updated data types were easier to work with.
 
-However, our website does not make use of all the relations in our schema. Most notably, our website does not differentiate between minor and adult patients. Therefore, the relations isLinked and GuardianOf, which both describe the relationship between minor and adult patients, are not used. Another relation that is not used on our website is IsAllergicTo, which describes which patients are allergic to which ingredients.
+However, our GUI does not make use of all the relations in our schema. Most notably, it does not differentiate between minor and adult patients. Therefore, the relations isLinked and GuardianOf, which both describe the relationship between minor and adult patients, are not used. Another relation that is not used for our GUI is IsAllergicTo, which describes which patients are allergic to which ingredients.
 
-These currently unused relations are still included in the SQL tables as they would be useful if/when more functionalities are added in. For instance, leaving in the minor/adult schemas will make it easier to add in the functionality for guardians to book vaccination appointments for their children.
+These currently unused relations are still included in the SQL tables as they would be useful if/when more functionalities are added in. For instance, keeping the minor/adult schemas will make it easier to add in the functionality for guardians to book vaccination appointments for their children.
+ 
+
 
 ## This repository contains the following hand in requirements:
 ### All code used in the application
