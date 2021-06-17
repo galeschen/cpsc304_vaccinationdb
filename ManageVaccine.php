@@ -6,7 +6,7 @@
     <body>
     <br />
     <br />       
-    <h2>Vaccine</h2>
+    <h2>Vaccines</h2>
         <?php
         include 'oracle_connection.php';
         $mID = NULL;
