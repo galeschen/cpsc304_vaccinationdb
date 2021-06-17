@@ -1,0 +1,1 @@
+This folder contains 9 sample SQL queries, as outlined by the Milestone 5 criteria.
