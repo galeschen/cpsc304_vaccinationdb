@@ -32,10 +32,10 @@
                 $name = $nameResult[0];
 
 				// WELCOME STATEMENT
-                echo "<h3>Welcome " . $name . "!</h3>";
+                echo "<h2>Welcome " . $name . "!</h2>";
 
                 // UPCOMING APPOINTMENTS
-                echo "<h4> &nbsp &nbsp &nbsp Here are your upcoming appointments:</h4>";
+                echo "<h2>These are your upcoming appointments:</h2>";
 				$result = executePlainSQL(
                     "SELECT Vaccine.VName AS Vaccine,
                     P.PName AS Patient,
@@ -52,20 +52,15 @@
                 );
                     // 3234842
 
-                    /*
-                    if ($result[0] == NULL) {
-                        echo "<h5>You have no upcoming appointments!</h5>";
-                    }
-                    */
                     $i = 0;
                     // this is working.
                     while ($appointmentInfo = OCI_Fetch_Array($result, OCI_BOTH)) {
-                        echo "<h5>Vaccine: $appointmentInfo[0]  <br />
-                        Patient:  $appointmentInfo[1] <br />
-                        Clinic: $appointmentInfo[2]  <br />
-                        Address: $appointmentInfo[3] <br />
-                        City: $appointmentInfo[4] <br />
-                        Date & Time: $appointmentInfo[5]</h5>";
+                        // echo "<h5>Vaccine: $appointmentInfo[0]  <br />
+                        // Patient:  $appointmentInfo[1] <br />
+                        // Clinic: $appointmentInfo[2]  <br />
+                        // Address: $appointmentInfo[3] <br />
+                        // City: $appointmentInfo[4] <br />
+                        // Date & Time: $appointmentInfo[5]</h5>";
                         $i += 1;
                     }
 

@@ -342,7 +342,7 @@ INSERT INTO PatientAddress
 VALUES ('V5F3G2', 'Vancouver');
 
 INSERT INTO Patient
-VALUES (3234842, 'Eiffel Douglas', 'M', '3942 Spire St', 'N9V8B2', DATE '1979-12-03');
+VALUES (3234842, 'Doug Eiffel', 'M', '3942 Spire St', 'N9V8B2', DATE '1979-12-03');
 INSERT INTO Patient
 VALUES (3425352, 'Daniel Jacobi', 'M', '9382 Walnut Rd', 'N9V8B2', DATE '1982-07-23');
 INSERT INTO Patient
