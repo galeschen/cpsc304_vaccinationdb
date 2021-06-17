@@ -164,7 +164,7 @@
                     );
 
                     // we also had that information in table form:
-                    echo "<table>";
+                    echo "<table align = 'center'>";
                     echo "<tr>
                          <th>Appointment ID</th>
                          <th>Clinic ID</th>
