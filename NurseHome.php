@@ -5,7 +5,13 @@
     </head>
     <body>
     <br />
-    <br />       
+    <br />
+
+        <form method="POST"> 
+        <h2>Reset Your Account Password</h2>
+        New Password: <input type="text" name="newpassword"> <br /><br />
+        <input type="submit" value="Reset Password" name="updateNursePassword"></p>
+        </form> 
 
         <?php
         include 'oracle_connection.php';
@@ -99,14 +105,31 @@
                             <td>" . $row[2] . "</td>
                             <td>" . $row[3] . "</td>
                             <td>" . $row[4] . "</td>
-                            <td>" .  $row[5] . "</td>
+                            <td>" . $row[5] . "</td>
                         </tr>"; //or just use "echo $row[0]"
                     }
                     echo "</table>";
                 disconnectFromDB();                
             }            
+        }        
+
+        function updateNursePassword() {
+            global $db_conn;
+            $nID = $_GET['nID'];
+            $NewPassword = $_POST["newpassword"];
+            executePlainSQL("UPDATE Nurse SET npassword = '$NewPassword' WHERE ID = '$nID'");
+            echo "Password for '$nID' updated to '$NewPassword'<br>";
+            OCICommit($db_conn);
         }
-     
+
+        function handlePostRequest() {
+            if (connectToDB()) {
+                if (array_key_exists('updateNursePassword', $_POST)) {
+                    updateNursePassword();
+                }
+                disconnectFromDB();
+            }
+        }
 
         function handleloginRequest() {
             global $db_conn;
@@ -115,6 +138,13 @@
         }
 
         initialization();
+        handlePostRequest();
 		?>
+
+<!-- logout option -->
+    <form method="POST" action="Vaccination.php"> <!--refresh page when submitted-->
+    <input type="submit" value="Logout" name="logout"></p>
+    </form>
+
 	</body>
 </html>
