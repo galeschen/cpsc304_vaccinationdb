@@ -19,7 +19,30 @@
         Postal Code: <input type="text" name="UA_PostalCode"> <br /><br />
         City: <input type="text" name="UA_City"> <br /><br />
         <input type="submit" value="Update Address" name="updatePatientAccountAddress"></p>
-    </form>   
+    </form>
+
+    <form method="POST"> 
+        <input type="submit" value="Show Appointment Booking Info" name="printBookingInfo"></p>
+    </form>
+
+    <form method="POST"> 
+        <h2>Book Appointment</h2>
+        Appointment ID: <input type="text" placeholder="5 Digits Max" name="BA_AppointmentID"> <br /><br />
+        Clinic ID: <input type="text" placeholder="Pick from Available" name="BA_ClinicID"> <br /><br />
+        Date and Time: <input type="datetime-local" name="BA_Time"> <br /><br />
+        Patient PHN: <input type="text" name="BA_PatientPHN"> <br /><br />
+        Nurse ID: <input type="text" placeholder="Pick from Available" name="BA_NurseID"> <br /><br />
+        Vaccine ID: <input type="text" placeholder="Pick from Available" name="BA_VaccineID"> <br /><br />
+        <input type="submit" value="Book Appointment" name="bookAppointment"></p>
+    </form>
+
+    <form method="POST"> 
+        <h2>Cancel Appointment</h2>
+        Appointment ID: <input type="text" placeholder="Select from appointment" name="CA_AppointmentID"> <br /><br />
+        Clinic ID: <input type="text" placeholder="Select from appointment" name="CA_ClinicID"> <br /><br />
+        <input type="submit" value="Cancel Appointment" name="cancelAppointment"></p>
+    </form>
+
 
         <?php
         include 'oracle_connection.php';
@@ -120,7 +143,9 @@
                     }
 
                     $result = executePlainSQL(
-                        "SELECT Vaccine.VName AS Vaccine,
+                        "SELECT AppointmentID AS ID,
+                        C.ClinicID AS CID,
+                        Vaccine.VName AS Vaccine,
                         C.ClinicName AS Clinic, 
                         C.StreetAddress AS ClinicAddress, 
                         A.City AS ClinicCity,
@@ -134,6 +159,8 @@
 
                     echo "<table>";
                     echo "<tr>
+                        <th>Appointment ID</th>
+                        <th>Clinic ID</th>
                         <th>Vaccine</th>
                         <th>Clinic</th>
                         <th>Address</th>
@@ -147,6 +174,8 @@
                             <td>" . $row[2] . "</td>
                             <td>" . $row[3] . "</td>
                             <td>" . $row[4] . "</td>
+                            <td>" . $row[5] . "</td>
+                            <td>" . $row[6] . "</td>
                         </tr>"; //or just use "echo $row[0]"
                     }
                     echo "</table>";
@@ -159,6 +188,19 @@
             }            
         }
 
+        function cancelAppointment() {
+            global $db_conn;
+            $AppointmentIDToCancel = $_POST['CA_AppointmentID'];
+            $ClinicIDToCancel = $_POST['CA_ClinicID'];
+            executePlainSQL(
+                "DELETE FROM VaccinationAppointment
+                WHERE AppointmentID = '$AppointmentIDToCancel' AND ClinicID = '$ClinicIDToCancel'"
+            );
+            echo "Appointment cancelled<br>";
+            OCICommit($db_conn);
+        }
+
+        // TODO: DEAL IWTH integrity constraint (ORA_ICA29.SYS_C00403362) violated ERROR
         function updatePatientAccountPassword() {
             global $db_conn;
             $PatientUsername = $_GET['pusername'];
@@ -170,26 +212,20 @@
 
         // TODO: DOESNT WORK CORRECTLY
         function updatePatientAccountAddress() {
-            echo "TESTING WORKING <br>";
             global $db_conn;
             $PatientUsername = $_GET['pusername'];
             
             $NewStreetAddress = $_POST['UA_StreetAddress'];
             $NewPostalCode = $_POST['UA_PostalCode'];
             $NewCity = $_POST['UA_City'];
-            
-            // TODO: MAKE IT CHECK IF POSTAL CODE ALREADY EXISTS FIRST
-            /*
-            executePlainSQL(
-                "INSERT INTO PatientAddress(PostalCode, City)
-                SELECT '$NewPostalCode', '$NewCity'
-                WHERE NOT EXISTS(
-                    SELECT *
-                    FROM PatientAddress
-                    WHERE PostalCode = '$NewPostalCode'
-                )"
-            );
-            */
+
+
+            if (executePlainSQL("SELECT COUNT(*) FROM PatientAddress WHERE PostalCode = $NewPostalCode") == 0) {
+                executePlainSQL(
+                    "INSERT INTO PatientAddress (PostalCode, City)
+                    VALUES('$NewPostalCode', '$NewCity')"
+                );
+            }
             
             executePlainSQL(
                 "UPDATE Patient 
@@ -205,6 +241,91 @@
             OCICommit($db_conn);
         }
 
+        function printBookingInfo() {
+            global $db_conn;
+            $result = executePlainSQL(
+                "SELECT * 
+                FROM Clinic
+                LEFT OUTER JOIN PatientAddress
+                ON Clinic.PostalCode = PatientAddress.PostalCode"
+            );
+            echo "<table><caption>Clinics</caption>";
+            echo "<tr>
+                    <th>Clinic ID</th>
+                    <th>Clinic</th>
+                    <th>Address</th>
+                </tr>";
+            while ($row = OCI_Fetch_Array($result, OCI_ASSOC)) {
+                echo "<tr>
+                        <td>" . $row["CLINICID"] . "</td>
+                        <td>" . $row["CLINICNAME"] . "</td>
+                        <td>" . $row["STREETADDRESS"] . "</td>
+                    </tr>";
+            }
+            echo "</table>";
+
+            $result = executePlainSQL(
+                "SELECT * 
+                FROM Nurse"
+            );
+            echo "<table><caption>Nurses</caption>";
+            echo "<tr>
+                    <th>Nurse ID</th>
+                    <th>Name</th>
+                </tr>";
+            while ($row = OCI_Fetch_Array($result, OCI_ASSOC)) {
+                echo "<tr>
+                        <td>" . $row["ID"] . "</td>
+                        <td>" . $row["NNAME"] . "</td>
+                    </tr>";
+            }
+            echo "</table>";
+
+            $result = executePlainSQL(
+                "SELECT * 
+                FROM Vaccine"
+            );
+            echo "<table><caption>Vaccines</caption>";
+            echo "<tr>
+                    <th>Vaccine ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price ($)</th>
+                </tr>";
+            while ($row = OCI_Fetch_Array($result, OCI_ASSOC)) {
+                echo "<tr>
+                        <td>" . $row["ID"] . "</td>
+                        <td>" . $row["VNAME"] . "</td>
+                        <td>" . $row["ISFOR"] . "</td>
+                        <td>" . $row["COST"] . "</td>
+                    </tr>";
+            }
+            echo "</table>";
+
+            OCICommit($db_conn);
+        }
+
+        // TODO: NOT WORKING CORRECTLY
+        function bookAppointment() {
+            global $db_conn;
+            $AppointmentID = $_POST["BA_AppointmentID"];
+            $ClinicID = $_POST["BA_ClinicID"];
+            $DateAndTime = $_POST["BA_Time"];
+            $PatientPHN = $_POST["BA_PatientPHN"];
+            $NurseID = $_POST["BA_NurseID"];
+            $VaccineID = $_POST["BA_VaccineID"];
+            $username = $_GET['pusername'];
+            $BookerPHN = executePlainSQL(
+                "SELECT PersonalHealthNumber FROM PatientAccount
+                where Username = '$username'"
+            );
+            executePlainSQL(
+                "INSERT INTO VaccinationAppointment (AppointmentID, ClinicID, Time, BookerPHN, PatientPHN, NurseID, VaccineID)
+                VALUES ('$AppointmentID', '$ClinicID', TIMESTAMP '$DateAndTime', '$BookerPHN', '$PatientPHN', '$NurseID', '$VaccineID')"
+            );
+            OCICommit($db_conn);
+        }
+
         function handlePostRequest() {
             if (connectToDB()) {
                 if (array_key_exists('updatePatientAccountPassword', $_POST)) {
@@ -212,6 +333,15 @@
                 }
                 else if (array_key_exists('updatePatientAccountAddress', $_POST)) {
                     updatePatientAccountAddress();
+                }
+                else if (array_key_exists('printBookingInfo', $_POST)) {
+                    printBookingInfo();
+                }
+                else if (array_key_exists('bookAppointment', $_POST)) {
+                    bookAppointment();
+                }
+                else if (array_key_exists('cancelAppointment', $_POST)) {
+                    cancelAppointment();
                 }
                 disconnectFromDB();
             }
