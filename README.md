@@ -1,6 +1,6 @@
 # project_m6i8r_u4c3b_y7i2b
 ## Description – what was accomplished?
-A website that provides access to a vaccination database for vaccination booking. It has four types of users: clinic managers, nurses, clerks, and patients. A set of different SQL queries for different user types are available through the website. Clerks help book vaccination appointments and update patient information. Patients can book their own appointments and view their upcoming appointments. Nurses can view their upcoming appointments. Managers can edit the information for various vaccines and nurses at their clinic.
+A website that provides access to a vaccination database for vaccination booking. It has four types of users: clinic managers, nurses, clerks, and patients. A set of different SQL queries for different user types are available through the website. Clerks help book vaccination appointments and update patient information. Patients can book their own appointments and view their upcoming appointments. Nurses can view their upcoming appointments. Managers can filter for various vaccines and edit the nurses at their clinic.
 
 ## How the final schema differed from the schema turned in, and why?
 The final schema did not differ from the schema turned in, except for a few minor changes, such as changes to data types (e.g. data type for VaccinationAppointment.time from TIMESTAMP to DATE).
