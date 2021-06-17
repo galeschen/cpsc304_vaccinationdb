@@ -74,8 +74,8 @@
 
      <form method="POST" class='center'>
 
-            <input type="submit" value="Manage Vaccine" name="ManagerVaccine"></p>
-            <input type="submit" value="Manage Nurse" name="ManagerNurse"></p> 
+            <input type="submit" value="Manage Vaccines" name="ManagerVaccine"></p>
+            <input type="submit" value="Manage Nurses" name="ManagerNurse"></p> 
     </form>
     
     <!-- Sign out -->
