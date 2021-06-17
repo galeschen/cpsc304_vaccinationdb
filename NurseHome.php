@@ -72,7 +72,7 @@
                     if ($i == 0) {
                         echo "<h5>You have no upcoming appointments!</h5>";
                     }
-
+                    
                     $result = executePlainSQL(
                         "SELECT Vaccine.VName AS Vaccine,
                         P.PName AS Patient,

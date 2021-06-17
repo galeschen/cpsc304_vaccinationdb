@@ -26,11 +26,11 @@
     </form>
 
     <form method="POST"> 
-        <h2>Book Appointment</h2>
+        <h2>Book your next appointment</h2>
         Appointment ID: <input type="text" placeholder="5 Digits Max" name="BA_AppointmentID"> <br /><br />
         Clinic ID: <input type="text" placeholder="Pick from Available" name="BA_ClinicID"> <br /><br />
-        Date and Time: <input type="datetime-local" name="BA_Time"> <br /><br />
-        Patient PHN: <input type="text" name="BA_PatientPHN"> <br /><br />
+        Date and Time: <input type="datetime-local" placeholder = "yyyy-mm-dd hh:mm:ss" name="BA_Time"> <br /><br />
+        Your PHN: <input type="text" name="BA_PatientPHN"> <br /><br />
         Nurse ID: <input type="text" placeholder="Pick from Available" name="BA_NurseID"> <br /><br />
         Vaccine ID: <input type="text" placeholder="Pick from Available" name="BA_VaccineID"> <br /><br />
         <input type="submit" value="Book Appointment" name="bookAppointment"></p>
@@ -112,7 +112,7 @@
                 
                 // UPCOMING APPOINTMENTS
                 // this is working.
-                echo "<h2>This is your next vaccination appointment:</h2>";
+                echo "<h2>These are your upcoming vaccination appointments:</h2>";
 				$result = executePlainSQL("SELECT Vaccine.VName AS Vaccine,
                     C.ClinicName AS Clinic, 
                     C.StreetAddress AS ClinicAddress, 
@@ -158,33 +158,29 @@
                         AND V.VaccineID = Vaccine.ID"
                     );
 
-                    echo "<table>";
-                    echo "<tr>
-                        <th>Appointment ID</th>
-                        <th>Clinic ID</th>
-                        <th>Vaccine</th>
-                        <th>Clinic</th>
-                        <th>Address</th>
-                        <th>City</th>
-                        <th>Time</th>
-                    </tr>";
-                    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                        echo "<tr>
-                            <td>" . $row[0] . "</td>
-                            <td>" . $row[1] . "</td>
-                            <td>" . $row[2] . "</td>
-                            <td>" . $row[3] . "</td>
-                            <td>" . $row[4] . "</td>
-                            <td>" . $row[5] . "</td>
-                            <td>" . $row[6] . "</td>
-                        </tr>"; //or just use "echo $row[0]"
-                    }
-                    echo "</table>";
-
-				// BUTTON TO BOOK A NEW APPOINTMENT
-
-
-				// BUTTON TO CANCEL AN APPOINTMENT.... if i have time
+                    // we also had that information in table form:
+                    // echo "<table>";
+                    // echo "<tr>
+                    //     <th>Appointment ID</th>
+                    //     <th>Clinic ID</th>
+                    //     <th>Vaccine</th>
+                    //     <th>Clinic</th>
+                    //     <th>Address</th>
+                    //     <th>City</th>
+                    //     <th>Time</th>
+                    // </tr>";
+                    // while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                    //     echo "<tr>
+                    //         <td>" . $row[0] . "</td>
+                    //         <td>" . $row[1] . "</td>
+                    //         <td>" . $row[2] . "</td>
+                    //         <td>" . $row[3] . "</td>
+                    //         <td>" . $row[4] . "</td>
+                    //         <td>" . $row[5] . "</td>
+                    //         <td>" . $row[6] . "</td>
+                    //     </tr>"; //or just use "echo $row[0]"
+                    // }
+                    // echo "</table>";
                 disconnectFromDB();                
             }            
         }
@@ -308,6 +304,7 @@
 
         // TODO: NOT WORKING CORRECTLY
         function bookAppointment() {
+            // echo "made it to book appt.";
             global $db_conn;
             $AppointmentID = $_POST["BA_AppointmentID"];
             $ClinicID = $_POST["BA_ClinicID"];
@@ -316,14 +313,11 @@
             $NurseID = $_POST["BA_NurseID"];
             $VaccineID = $_POST["BA_VaccineID"];
             $username = $_GET['pusername'];
-            $BookerPHN = executePlainSQL(
-                "SELECT PersonalHealthNumber FROM PatientAccount
-                where Username = '$username'"
-            );
             executePlainSQL(
-                "INSERT INTO VaccinationAppointment (AppointmentID, ClinicID, Time, BookerPHN, PatientPHN, NurseID, VaccineID)
-                VALUES ('$AppointmentID', '$ClinicID', TIMESTAMP '$DateAndTime', '$BookerPHN', '$PatientPHN', '$NurseID', '$VaccineID')"
+                "INSERT INTO VaccinationAppointment
+                VALUES ('$AppointmentID', '$ClinicID', timestamp '$DateAndTime', $PatientPHN, $PatientPHN, '$NurseID', '$VaccineID')"
             );
+            echo "Appointment booked!";
             OCICommit($db_conn);
         }
 
@@ -339,7 +333,9 @@
                     printBookingInfo();
                 }
                 else if (array_key_exists('bookAppointment', $_POST)) {
+                    // echo "calling book appointment.";
                     bookAppointment();
+                    // echo "called book appointment.";
                 }
                 else if (array_key_exists('cancelAppointment', $_POST)) {
                     cancelAppointment();
