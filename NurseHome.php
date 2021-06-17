@@ -1,17 +1,11 @@
 <html>
     <head>
-    <link rel="stylesheet" href = "./css/Patient.css">
+    <link rel="stylesheet" href = "./css/Nurse.css">
         <title>CPSC 304 PHP/Nurse Home</title>
     </head>
     <body>
     <br />
-    <br />
-
-        <form method="POST"> 
-        <h2>Reset Your Account Password</h2>
-        New Password: <input type="text" name="newpassword"> <br /><br />
-        <input type="submit" value="Reset Password" name="updateNursePassword"></p>
-        </form> 
+    <br />       
 
         <?php
         include 'oracle_connection.php';
@@ -24,7 +18,6 @@
               echo "Url has no user";
             }
             if (connectToDB()) {
-				// echo "debug - you made it.";
 
 				// GET NURSE NAME
 				$result = executePlainSQL("SELECT NName FROM Nurse WHERE ID = '$nID'");
@@ -32,58 +25,45 @@
                 $name = $nameResult[0];
 
 				// WELCOME STATEMENT
-                echo "<h2>Welcome " . $name . "!</h2>";
+                echo "<h3>Welcome " . $name . "!</h3>";
 
                 // UPCOMING APPOINTMENTS
-                echo "<h2>These are your upcoming appointments:</h2>";
-				$result = executePlainSQL(
-                    "SELECT Vaccine.VName AS Vaccine,
+               echo "<h4>  Here are your upcoming appointments:</h4>";
+				$result = executePlainSQL("SELECT Vaccine.VName AS Vaccine,
                     P.PName AS Patient,
                     C.ClinicName AS Clinic, 
                     C.StreetAddress AS ClinicAddress, 
                     A.City AS ClinicCity,
                     V.Time AS AppointmentTime
-                    FROM VaccinationAppointment V, Clinic C, ClinicAddress A, Patient P, Vaccine
-                    WHERE V.NurseID = '$nID'
+					FROM VaccinationAppointment V, Clinic C, ClinicAddress A, Patient P, Vaccine
+					WHERE V.NurseID = '$nID'
                     AND P.PersonalHealthNumber = V.PatientPHN
                     AND C.ClinicID = V.ClinicID
                     AND A.PostalCode = C.PostalCode
-                    AND V.VaccineID = Vaccine.ID"
-                );
-                    // 3234842
+                    AND V.VaccineID = Vaccine.ID 
+                    ORDER BY V.Time asc");
 
-                    $i = 0;
-                    // this is working.
-                    while ($appointmentInfo = OCI_Fetch_Array($result, OCI_BOTH)) {
-                        // echo "<h5>Vaccine: $appointmentInfo[0]  <br />
-                        // Patient:  $appointmentInfo[1] <br />
-                        // Clinic: $appointmentInfo[2]  <br />
-                        // Address: $appointmentInfo[3] <br />
-                        // City: $appointmentInfo[4] <br />
-                        // Date & Time: $appointmentInfo[5]</h5>";
-                        $i += 1;
-                    }
-
-                    if ($i == 0) {
+                    // find whether has appointment or not
+                    $appointmentInfo = OCI_Fetch_Array($result, OCI_BOTH);
+                    if ($appointmentInfo[0] == NULL) {
                         echo "<h5>You have no upcoming appointments!</h5>";
                     }
                     
-                    $result = executePlainSQL(
-                        "SELECT Vaccine.VName AS Vaccine,
-                        P.PName AS Patient,
-                        C.ClinicName AS Clinic, 
-                        C.StreetAddress AS ClinicAddress, 
-                        A.City AS ClinicCity,
-                        V.Time AS AppointmentTime
-                        FROM VaccinationAppointment V, Clinic C, ClinicAddress A, Patient P, Vaccine
-                        WHERE V.NurseID = '$nID'
-                        AND P.PersonalHealthNumber = V.PatientPHN
-                        AND C.ClinicID = V.ClinicID
-                        AND A.PostalCode = C.PostalCode
-                        AND V.VaccineID = Vaccine.ID"
-                    );
+                    $result = executePlainSQL("SELECT Vaccine.VName AS Vaccine,
+                    P.PName AS Patient,
+                    C.ClinicName AS Clinic, 
+                    C.StreetAddress AS ClinicAddress, 
+                    A.City AS ClinicCity,
+                    V.Time AS AppointmentTime
+					FROM VaccinationAppointment V, Clinic C, ClinicAddress A, Patient P, Vaccine
+					WHERE V.NurseID = '$nID'
+                    AND P.PersonalHealthNumber = V.PatientPHN
+                    AND C.ClinicID = V.ClinicID
+                    AND A.PostalCode = C.PostalCode
+                    AND V.VaccineID = Vaccine.ID 
+                    ORDER BY V.Time asc");                    
 
-                    echo "<table>";
+                    echo "<table align='center'>";
                     echo "<tr>
                         <th>Vaccine</th>
                         <th>Patient</th>
@@ -93,53 +73,32 @@
                         <th>Date & Time</th>
                     </tr>";
                     
+                    
                     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                        
                         echo "<tr>
                             <td>" . $row[0] . "</td>
                             <td>" . $row[1] . "</td>
                             <td>" . $row[2] . "</td>
                             <td>" . $row[3] . "</td>
                             <td>" . $row[4] . "</td>
-                            <td>" . $row[5] . "</td>
+                            <td>" .  $row[5] . "</td>
                         </tr>"; //or just use "echo $row[0]"
                     }
                     echo "</table>";
                 disconnectFromDB();                
             }            
-        }        
-
-        function updateNursePassword() {
-            global $db_conn;
-            $nID = $_GET['nID'];
-            $NewPassword = $_POST["newpassword"];
-            executePlainSQL("UPDATE Nurse SET npassword = '$NewPassword' WHERE ID = '$nID'");
-            echo "Password for '$nID' updated to '$NewPassword'<br>";
-            OCICommit($db_conn);
-        }
-
-        function handlePostRequest() {
-            if (connectToDB()) {
-                if (array_key_exists('updateNursePassword', $_POST)) {
-                    updateNursePassword();
-                }
-                disconnectFromDB();
-            }
-        }
-
-        function handleloginRequest() {
-            global $db_conn;
-            
-            OCICommit($db_conn);
         }
 
         initialization();
-        handlePostRequest();
 		?>
+        <br />
+        <br />
+        
+        <!-- Sign out -->
+            <form method="POST" action="NurseLogin.php" class='center'> 
 
-<!-- logout option -->
-    <form method="POST" action="Vaccination.php"> <!--refresh page when submitted-->
-    <input type="submit" value="Logout" name="logout"></p>
-    </form>
-
+        <input type="submit" value="Sign out" name="signout"></p>
+        </form>
 	</body>
 </html>
