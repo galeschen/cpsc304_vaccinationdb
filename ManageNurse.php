@@ -6,7 +6,7 @@
     <body>
     <br />
     <br />       
-    <h2>Nurses</h2>
+    <h2>Nurses at your clinic</h2>
         <?php
         include 'oracle_connection.php';
         $mID = NULL;
