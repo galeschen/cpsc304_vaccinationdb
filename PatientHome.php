@@ -32,7 +32,8 @@
         
         Appointment ID: <input type="text" placeholder="5 Digits Max" name="BA_AppointmentID"> <br /><br />
         Clinic ID: <input type="text" placeholder="Pick from Available" name="BA_ClinicID"> <br /><br />
-        Date and Time: <input type="datetime-local" placeholder = "yyyy-mm-dd hh:mm:ss" name="BA_Time"> <br /><br />
+        Date: <input type="date" name="BA_Date"> <br /><br />
+        Time: <input type="time" name="BA_Time"> <br /><br />
         Your PHN: <input type="text" name="BA_PatientPHN"> <br /><br />
         Nurse ID: <input type="text" placeholder="Pick from Available" name="BA_NurseID"> <br /><br />
         Vaccine ID: <input type="text" placeholder="Pick from Available" name="BA_VaccineID"> <br /><br />
@@ -250,7 +251,7 @@
                 LEFT OUTER JOIN PatientAddress
                 ON Clinic.PostalCode = PatientAddress.PostalCode"
             );
-            echo "<table><caption>Clinics</caption>";
+            echo "<table align='center'><caption>Clinics</caption>";
             echo "<tr>
                     <th>Clinic ID</th>
                     <th>Clinic</th>
@@ -264,12 +265,12 @@
                     </tr>";
             }
             echo "</table>";
-
+            echo "<br />";
             $result = executePlainSQL(
                 "SELECT * 
                 FROM Nurse"
             );
-            echo "<table><caption>Nurses</caption>";
+            echo "<table align='center'><caption>Nurses</caption>";
             echo "<tr>
                     <th>Nurse ID</th>
                     <th>Name</th>
@@ -281,12 +282,12 @@
                     </tr>";
             }
             echo "</table>";
-
+            echo "<br />";
             $result = executePlainSQL(
                 "SELECT * 
                 FROM Vaccine"
             );
-            echo "<table><caption>Vaccines</caption>";
+            echo "<table align='center'><caption>Vaccines</caption>";
             echo "<tr>
                     <th>Vaccine ID</th>
                     <th>Name</th>
@@ -304,22 +305,24 @@
             echo "</table>";
 
             OCICommit($db_conn);
+
         }
 
-        // TODO: NOT WORKING CORRECTLY
         function bookAppointment() {
             // echo "made it to book appt.";
             global $db_conn;
             $AppointmentID = $_POST["BA_AppointmentID"];
             $ClinicID = $_POST["BA_ClinicID"];
-            $DateAndTime = $_POST["BA_Time"];
+            $date = $_POST["BA_Date"];
+            $time = $_POST["BA_Time"];
             $PatientPHN = $_POST["BA_PatientPHN"];
             $NurseID = $_POST["BA_NurseID"];
             $VaccineID = $_POST["BA_VaccineID"];
             $username = $_GET['pusername'];
+            $combinedDT = date('Y-m-d H:i:s', strtotime("$date $time"));
             executePlainSQL(
                 "INSERT INTO VaccinationAppointment
-                VALUES ('$AppointmentID', '$ClinicID', timestamp '$DateAndTime', $PatientPHN, $PatientPHN, '$NurseID', '$VaccineID')"
+                VALUES ('$AppointmentID', '$ClinicID', timestamp '$combinedDT', $PatientPHN, $PatientPHN, '$NurseID', '$VaccineID')"
             );
             echo "Appointment booked!";
             OCICommit($db_conn);
@@ -337,9 +340,7 @@
                     printBookingInfo();
                 }
                 else if (array_key_exists('bookAppointment', $_POST)) {
-                    // echo "calling book appointment.";
                     bookAppointment();
-                    // echo "called book appointment.";
                 }
                 else if (array_key_exists('cancelAppointment', $_POST)) {
                     cancelAppointment();
