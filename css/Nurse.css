@@ -1,0 +1,70 @@
+h2 {
+    text-align: center;
+    color: rgb(12, 71, 88);
+    font-size: 70px;
+    font-family: 'Times New Roman', Times, serif;
+}
+h3 {
+    text-align:Left;
+    color: rgb(102, 104, 192);
+    font-size: 50px;
+    font-family: 'Times New Roman', Times, serif; 
+} 
+
+h4 {
+    text-align:center;
+    color: rgb(63, 64, 124);
+    font-size: 40px;
+    font-family: 'Times New Roman', Times, serif; 
+} 
+
+h5 {
+    text-align:center;
+    color: rgb(10, 46, 38);
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif; 
+} 
+
+h6 {
+    text-align:center;
+    color: rgb(10, 46, 38);
+    font-size: 25px;
+    font-family: 'Times New Roman', Times, serif; 
+} 
+
+table {
+    width: 85%;
+    border: 1px solid black;
+    text-align: center;
+    padding: 22px 10px;
+    font-size: 25px;
+    font-family: 'Times New Roman', Times, serif; 
+    border-spacing:0 22px;
+}
+
+th {
+    height: 70px;
+  }
+
+#check {
+    text-align: right;
+    font-size: 24px;
+    color: rgb(63, 89, 202);
+    font-family:Arial, Helvetica, sans-serif;
+}
+.center {
+    text-align: center;
+}
+
+input[type='submit'] {
+    background-color: #d1f1bc;
+    color: rgb(6, 29, 58);
+    padding: 15px 32px;
+   
+    text-decoration: none;
+    font-size: 16px;
+
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
