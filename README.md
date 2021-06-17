@@ -1,5 +1,5 @@
 # project_m6i8r_u4c3b_y7i2b
-## The following hand in requirements:
+## This repository contains the following hand in requirements:
 ### /sql/sql_tables.sql
 A single SQL script for creating all the tables and data in the database
 
